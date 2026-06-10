@@ -1,0 +1,33 @@
+Stage 1: vosk_transcription/transcribe.py
+- Uses vosk.Model and KaldiRecognizer
+- Sounddevice capture microphone audio
+- Vosk converts speech to text offline
+- Captures microphone input with sounddevice.RawInputStream
+- Saves timestamp, speaker name, raw_vosk_text, time taken per utterane
+- All collected data is converted into a DataFrame (Pandas).
+- Saves output to data/raw_transcript.csv
+
+Stage 2: ai_correction
+- Takes raw Vosk text
+- Sends it to: Gemini API First
+    If it fails, tries Ollama
+    If both fail, keeps original text
+- The corrected text is stored in a new column.
+- Saves output to data/correct_transcript.csv
+
+Stage 3: enrichment
+- correct file structure
+- proper CSV loading
+- correct feature engineering:
+    -> question_flag
+    -> num_words
+    -> text_size_chars
+    -> speech_rate_wps
+    -> speaker_turn_id
+- Saves output to data/final_transcript.csv
+
+Stage 4: validation.py
+- The final dataset is checked for errors.
+- If validation fails, the program stops and asks to fix issues.
+
+Stage 5: analyse.py

@@ -14,9 +14,9 @@ Output: a CSV with 25+ rows and a printed analytics report
 -   CORRECT_FILE: correction crashes → still have raw recording
 -   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
 
-==========================================================
+==================================================================
 
-###  The five stages
+##  The five stages
 ---
 
 ####  Stage 1: Record and transcribe (vosk_transcription/)

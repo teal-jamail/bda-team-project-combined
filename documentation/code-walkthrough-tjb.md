@@ -6,7 +6,9 @@ A meeting recorder and speech analytics pipeline.
 Five people sit together, each speakc short phrases into a mic
 The app records, transcribes, corrects, enriches, validates, and analyses
 
-Output: a CSV with 25+ rows and a printed analytics report
+#### Output: a CSV with 25+ rows and a printed analytics report
+
+-----
 
 ### Three file structure
 
@@ -24,7 +26,7 @@ Microphone casptures speech
 Vosk converts audio to raw text file offline - no internet needed
 Vosk is imperfect: no punctuation, mishears words, no capatalisation
 
-##### Output:** data/raw_transcript.csv
+##### Output: data/raw_transcript.csv
 
 ---
 #### Stage 2: AI correction (ai_correction/)
@@ -33,7 +35,7 @@ Gemeni fixes spelling, add punctuation, keeps original meaning
 If Gemini fails, Ollama is tried as a fallback
 If both fail, the orgiginal raw text is kept unchanged
 
-##### Output:** data/correction_transcript.csv
+##### Output: data/correction_transcript.csv
 
 ---
 #### Stage 3: Enrichment (enrichment/)

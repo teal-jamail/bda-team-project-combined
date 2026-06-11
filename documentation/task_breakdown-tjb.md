@@ -1,4 +1,4 @@
-========= 11.06 Overview =========
+========= Setup & Task Breakdown =========
 ## Repo: teal-jamail/bda-team-project-combined
 
 Hey all, here's the combined repo to share from single source.
@@ -30,6 +30,8 @@ Please review the:
 - `code-walkthrough-tjb.md`
 -- to see if any changes and reasoning look off
 
+** After initial recording session**
+- confirm full pipeline runs end to end after recording
 
 --- ## NITA ---
 
@@ -43,9 +45,13 @@ Please review the:
 let me know if anything doesn't match what you had in mind.
 
 
+** After initial recording session**
+- confirm Ollama fallback runs without errors
+
 --- ## Ebou ---
 
-**Before the recording session:**
+**Before the initial recording session:**
+
 Read through documentation folder 
 -- `merge_decision_log-tjb.md` and 
 -- `code-walkthrough-tjb.md` 
@@ -102,7 +108,7 @@ It checks six things:
   are numeric and greater than zero
 - question_flag is True or False
 
-This is your portion to explain in the video.
+This is yours to explain in the video.
 
 **After the initial recording session**
 
@@ -126,3 +132,22 @@ You're leading the recording and upload:
 - upload to OneDrive
 - share with Stelios's email
 - include the link in the peer evaluation form
+
+----- ## TEAL -----
+**Completed:**
+- reviewed both codebases (diasergiu, itsNTM)
+- identified and fixed bugs throughout 
+- annotated all files with inline comments
+- combined and set up repo then pushed to GitHub
+
+--- wrote documentation:
+- merge_decision_log-tjb.md — why decisions were made during the merge
+- code-walkthrough-tjb.md — line by line explanation of every file
+- task_breakdown-tjb.md — what each person needs to do
+- project-status-tjb.md — where things stand and what's left
+
+
+**Remaining:**
+- write analyse/__init__.py (Stage 5 — analytics)
+- write README for submission
+- update requirements.txt

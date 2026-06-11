@@ -58,3 +58,5 @@
 - update requirements.txt
 - schedule recording session
 - Alina script
+- Mon. 10.15 record w/ group
+- - send meeting recording

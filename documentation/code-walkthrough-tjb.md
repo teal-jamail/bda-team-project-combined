@@ -14,13 +14,11 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 -   CORRECT_FILE: correction crashes → still have raw recording
 -   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
 
------
------
-##  The five stages
------
------
+---
 
-####  Stage 1: Record and transcribe (vosk_transcription/)
+## The five stages
+
+#### Stage 1: Record and transcribe (vosk_transcription/)
 Microphone casptures speech
 Vosk converts audio to raw text file offline - no internet needed
 Vosk is imperfect: no punctuation, mishears words, no capatalisation

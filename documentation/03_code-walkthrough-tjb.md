@@ -1,5 +1,8 @@
 # BDA Team Project — Code Walkthrough
 
+This document explains how the codebase works, file by file.
+Read 01 and 02 first for context on what was built and why.
+
 ## What this project is
 
 A meeting recorder and speech analytics pipeline.

@@ -57,3 +57,4 @@
 - write analyse/__init__.py
 - update requirements.txt
 - schedule recording session
+- Alina script

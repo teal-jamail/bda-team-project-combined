@@ -192,6 +192,7 @@ Separation of concerns: each import represents one stage.
 - recording session cannot be killed by API failure
 
 ---
+### Stage breakdown
 -----
 #### Stage 1:
 - `all_data`: list of dicts, one per turn

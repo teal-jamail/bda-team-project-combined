@@ -1,7 +1,5 @@
 # BDA Team Project — Status
-
-# BDA Team Project — Status
-## Maintained by: Teal (teal-jamail/bda-team-project-combined)
+## teal-jamail/bda-team-project-combined
 
 ## Done
 - repo created and maintained: teal-jamail/bda-team-project-combined

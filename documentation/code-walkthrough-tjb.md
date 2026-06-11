@@ -8,8 +8,6 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 
 #### Output: a CSV with 25+ rows and a printed analytics report
 
------
-
 ### Three file structure
 
 -   RAW_FILE: raw crashes → lose nada from correction or enrichment

@@ -27,16 +27,16 @@ Vosk is imperfect: no punctuation, mishears words, no capatalisation
 ##### Output:** data/raw_transcript.csv
 
 ---
-### Stage 2: AI correction (ai_correction/)
+#### Stage 2: AI correction (ai_correction/)
 Ea. raw vosk transcript sent to Gemini for correction
 Gemeni fixes spelling, add punctuation, keeps original meaning
 If Gemini fails, Ollama is tried as a fallback
 If both fail, the orgiginal raw text is kept unchanged
 
-#### Output:** data/correction_transcript.csv
+##### Output:** data/correction_transcript.csv
 
 ---
-### Stage 3: Enrichment (enrichment/)
+#### Stage 3: Enrichment (enrichment/)
 Python calculates five new columns from corrected text
 No AI - pure calculation
 question_flag: does the text end with ?
@@ -45,7 +45,7 @@ text_size_chars: how many characters (w/ or w/o WS)
 speech_rate_wps: words divided by seconds
 speaker_turn_id: which turn number for speaker
 
-#### Output: data/final_transcript.csv
+##### Output: data/final_transcript.csv
 
 ---
 ### Stage 4: Validation (validation/)
@@ -59,7 +59,7 @@ Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
-==============================================
+===============================================================
 
 ### ai_correction/ollama_correct.py
 

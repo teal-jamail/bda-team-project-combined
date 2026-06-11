@@ -1,19 +1,38 @@
 # BDA Team Project — Code Walkthrough
 
-## What this project is
+---
 
-A meeting recorder and speech analytics pipeline.
-Five people sit together, each speakc short phrases into a mic
-The app records, transcribes, corrects, enriches, validates, and analyses
+## Stage breakdown
 
-#### Output: a CSV with 25+ rows and a printed analytics report
+### Stage 1:
+- `all_data`: list of dicts, one per turn
+- `current_speaker=None`: signals prompt on first call
+- ternary: keeps current speaker or switches if new name typed
+- timestamp captured per turn after recording completes
+- `KeyboardInterrupt` caught cleanly, execution continues
+- guard: empty `all_data` exits before creating blank dataframe
+- `pd.DataFrame(all_data)`: converts list of dicts to table
+- saved immediately: raw recordings protected before API calls begin
 
-### Three file structure
+### Stage 2:
+- `df.copy()`: independent copy so raw df stays untouched
+- `.apply(correct_with_fallback)`: one API call per row, O(n)
+- saved immediately: corrected data protected before enrichment
 
-- RAW_FILE: raw crashes → lose nada from correction or enrichment
-- CORRECT_FILE: correction crashes → still have raw recording
-- FINAL_FILE: enrichment crashes → still have all 25 corrected rows
+### Stage 3:
+- `correct_df` passed in: enrich reads from `text` col. only in `correct_df`
+- `enrich_dataframe` adds five calculated columns, returns modified df
+- saved as `FINAL_FILE`: read by validation and analytics
 
+### Stage 4:
+- `validate` returns True or False
+- if False: prints errors and `return` stops pipeline completely
+- no analytics on broken data
+
+### Stage 5:
+- one line: answers six questions, prints to console
+- no save, no return value needed
+  
 ---
 
 ## File walkthrough
@@ -149,39 +168,6 @@ Separation of concerns: each import represents one stage.
 - fallback chain: Gemini → Ollama → original text
 - `except Exception as e`: catches error, stores as e, execution continues
 - recording session cannot be killed by API failure
-
----
-
-## Stage breakdown
-
-### Stage 1:
-- `all_data`: list of dicts, one per turn
-- `current_speaker=None`: signals prompt on first call
-- ternary: keeps current speaker or switches if new name typed
-- timestamp captured per turn after recording completes
-- `KeyboardInterrupt` caught cleanly, execution continues
-- guard: empty `all_data` exits before creating blank dataframe
-- `pd.DataFrame(all_data)`: converts list of dicts to table
-- saved immediately: raw recordings protected before API calls begin
-
-### Stage 2:
-- `df.copy()`: independent copy so raw df stays untouched
-- `.apply(correct_with_fallback)`: one API call per row, O(n)
-- saved immediately: corrected data protected before enrichment
-
-### Stage 3:
-- `correct_df` passed in: enrich reads from `text` col. only in `correct_df`
-- `enrich_dataframe` adds five calculated columns, returns modified df
-- saved as `FINAL_FILE`: read by validation and analytics
-
-### Stage 4:
-- `validate` returns True or False
-- if False: prints errors and `return` stops pipeline completely
-- no analytics on broken data
-
-### Stage 5:
-- one line: answers six questions, prints to console
-- no save, no return value needed
 
 ---
 

@@ -52,13 +52,13 @@ top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
 ## Folder sturcture and why
 
-vosk_transcription/ - Stage 1 
-ai_correction/      - Stage 2
-enrichment/         - Stage 3
-validation/         - Stage 4
-analysis/           - Stage 5
-common/             - shared untilities (load.csv, save_csv)
-data/               - csv file from pipline (gitignored)
+- vosk_transcription/ - Stage 1 
+- ai_correction/      - Stage 2
+- enrichment/         - Stage 3
+- validation/         - Stage 4
+- analysis/           - Stage 5
+- common/             - shared untilities (load.csv, save_csv)
+- data/               - csv file from pipline (gitignored)
 
 Reason for seperation: each stage has a job
 A bug in enrichment can't affect transcription
@@ -95,7 +95,7 @@ Confirmed by notes.txt in repo
 - well-planned folder structure 
 - 3-file audit trail
 - Gemini-first-Ollama-fallback logic.
-Wrote main.py and shared
+- Wrote main.py and shared
 
 What was kept:complete architecture, main.py logic, enrich_dataframe
 

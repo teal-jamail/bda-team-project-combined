@@ -1,7 +1,5 @@
 # BDA Team Project — Status
-
-# BDA Team Project — Status
-## Maintained by: Teal (teal-jamail/bda-team-project-combined)
+## teal-jamail/bda-team-project-combined
 
 ## Done
 - repo created and maintained: teal-jamail/bda-team-project-combined
@@ -43,10 +41,9 @@
 - analyse/__init__.py (Teal)
 
 ## Not started
+- !! recording session (all 5 people, 25 rows minimum)
 - requirements.txt update
 - Vosk model download and local test
-- team instructions per person
-- recording session (all 5 people, 25 rows minimum)
 - README for submission
 - complexity writeup (Ebou)
 - team video (Alina)
@@ -56,7 +53,10 @@
 - recording session needs all 5 people present
 
 ## Next actions
-- write team instructions
+- copy for annoted and return originals .py
 - write analyse/__init__.py
 - update requirements.txt
 - schedule recording session
+- Alina script
+- Mon. 10.15 record w/ group
+- - send meeting recording

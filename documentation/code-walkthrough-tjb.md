@@ -17,10 +17,8 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 -   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
 
 -----
------
-
 ##  The five stages
----
+-----
 
 ####  Stage 1: Record and transcribe (vosk_transcription/)
 Microphone casptures speech
@@ -62,9 +60,8 @@ Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
-**-----
 -----
-
+-----
 #### ai_correction/ollama_correct.py
 
 Sends raw Vosk txt to local Ollama server for correction.
@@ -88,7 +85,6 @@ Ollama runs locally (http://localhost:11434) - no internet needed.
 - can test Ollama works w/o running full pipeline
   
 -----
-
 #### vosk_transcription/transcribe.py
 
 Records one speaker turn via mic and returns transcript and duration.
@@ -121,8 +117,7 @@ Uses Vosk for offline speech-to-text - no internet needed.
 - `full_text = ""`: starts empty, accumulates confirmed Vosk output during loop
 - `AcceptWaveform`: returns True only
 
----
-
+-----
 #### common/helpers.py
 
 Shared utilities used by main.py to load and save CSV files.
@@ -145,8 +140,7 @@ Keeps file I/O in one place - all stages use the same functions.
 - Time O(n): writes n rows to disk
 - Space O(1): no new memory allocated, dataframe already exists
 
----
-
+-----
 #### enrichment/enrich_dataset.py
 
 Takes corrected CSV as Pandas dataframe and adds five calculated columns.
@@ -175,8 +169,7 @@ Time O(n) per operation, Space O(n) for new columns.
 - `cumcount()`: counts from 0 within each group
 - `+1`: shifts to start at 1 as brief requires
 
----
-
+-----
 #### main.py:
 
 Entry point and orchestration layer for the full pipeline.
@@ -197,9 +190,8 @@ Separation of concerns: each import represents one stage.
 - `except Exception as e`: catches error, stores as e, execution continues
 - recording session cannot be killed by API failure
 
-**----------
----------
-
+------
+-----
 #### Stage 1:
 - `all_data`: list of dicts, one per turn
 - `current_speaker=None`: signals prompt on first call
@@ -210,26 +202,30 @@ Separation of concerns: each import represents one stage.
 - `pd.DataFrame(all_data)`: converts list of dicts to table
 - saved immediately: raw recordings protected before API calls begin
 
+-----
 #### Stage 2:
 - `df.copy()`: independent copy so raw df stays untouched
 - `.apply(correct_with_fallback)`: one API call per row, O(n)
 - saved immediately: corrected data protected before enrichment
 
+-----
 #### Stage 3:
 - `correct_df` passed in: enrich reads from `text` col. only in `correct_df`
 - `enrich_dataframe` adds five calculated columns, returns modified df
 - saved as `FINAL_FILE`: read by validation and analytics
 
+-----
 #### Stage 4:
 - `validate` returns True or False
 - if False: prints errors and `return` stops pipeline completely
 - no analytics on broken data
 
+-----
 #### Stage 5:
 - one line: answers six questions, prints to console
 - no save, no return value needed
 
-**-------
+-----
 -----
 
 **Placeholder**

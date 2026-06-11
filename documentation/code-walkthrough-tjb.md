@@ -16,7 +16,8 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 -   CORRECT_FILE: correction crashes → still have raw recording
 -   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
 
-==================================================================
+-----
+-----
 
 ##  The five stages
 ---
@@ -61,7 +62,8 @@ Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
-===============================================================
+-----
+-----
 
 ### ai_correction/ollama_correct.py
 

@@ -17,8 +17,9 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 -   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
 
 -----
+-----
 ##  The five stages
-
+-----
 -----
 
 ####  Stage 1: Record and transcribe (vosk_transcription/)
@@ -203,8 +204,11 @@ Separation of concerns: each import represents one stage.
 - recording session cannot be killed by API failure
 
 -----
+-----
+
 ### Stage breakdown
 
+-----
 -----
 
 #### Stage 1:
@@ -245,14 +249,17 @@ Separation of concerns: each import represents one stage.
 - no save, no return value needed
 
 -----
-###Placeholder
-
 -----
 
-####validation/__init__.py
+### Placeholder
+
+-----
+-----
+
+#### validation/__init__.py
 -- walkthrough to be added after recording session and testing --
 
 -----
 
-####analyse/__init__.py**
+#### analyse/__init__.py
 -- walkthrough to be added once file is written --

@@ -125,7 +125,7 @@ Uses Vosk for offline speech-to-text - no internet needed.
 - `full_text = ""`: starts empty, accumulates confirmed Vosk output during loop
 - `AcceptWaveform`: returns True only
 
------
+---
 
 #### common/helpers.py
 
@@ -149,7 +149,7 @@ Keeps file I/O in one place - all stages use the same functions.
 - Time O(n): writes n rows to disk
 - Space O(1): no new memory allocated, dataframe already exists
 
------
+---
 
 #### enrichment/enrich_dataset.py
 
@@ -179,7 +179,7 @@ Time O(n) per operation, Space O(n) for new columns.
 - `cumcount()`: counts from 0 within each group
 - `+1`: shifts to start at 1 as brief requires
 
------
+---
 
 #### main.py:
 
@@ -201,13 +201,13 @@ Separation of concerns: each import represents one stage.
 - `except Exception as e`: catches error, stores as e, execution continues
 - recording session cannot be killed by API failure
 
------
------
+---
+---
 
 ### Stage breakdown
 
------
------
+---
+---
 
 #### Stage 1:
 - `all_data`: list of dicts, one per turn

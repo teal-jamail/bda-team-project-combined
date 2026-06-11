@@ -25,7 +25,6 @@ Vosk is imperfect: no punctuation, mishears words, no capatalisation
 
 ##### Output: data/raw_transcript.csv
 
-
 #### Stage 2: AI correction (ai_correction/)
 Ea. raw vosk transcript sent to Gemini for correction
 Gemeni fixes spelling, add punctuation, keeps original meaning
@@ -33,7 +32,6 @@ If Gemini fails, Ollama is tried as a fallback
 If both fail, the orgiginal raw text is kept unchanged
 
 ##### Output: data/correction_transcript.csv
-
 
 #### Stage 3: Enrichment (enrichment/)
 Python calculates five new columns from corrected text

@@ -62,203 +62,195 @@ top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
 ### ai_correction/ollama_correct.py
 
-* sends raw vosk txt to local ollama server for correction
-* ollama runs locally (http://localhost:11434) - no internet needed
+Sends raw Vosk txt to local Ollama server for correction.  
+Ollama runs locally (http://localhost:11434) - no internet needed.
 
-imports:
-- requests: sends Http request to local ollama server
+imports
+---
+- `requests`: sends HTTP request to local Ollama server
 
-constants at top (defined once for reuse):
-- MODEL_NAME: uses gemma3
-- OLLAMA_URL: address local ollama API endpoint
+constants (defined once for reuse)
+---
+- `MODEL_NAME`: uses gemma3
+- `OLLAMA_URL`: address of local Ollama API endpoint
 
-ask_ollama(prompt):
-- posts prompt to ollama w/ stream:False (returns full respons, not token-by-token)
-- raise_for_status(): error handling - stops if server returns error code
+ask_ollama(prompt)
+---
+- posts prompt w/ `stream:False` (full response, not token-by-token)
+- `raise_for_status()`: error handling - stops if server returns error code
 - returns corrected txt stripped of extra ws
 
-if __name__ == "__main__":
-- test block - runs only when file directly executed
-- doesn't run when main.py imports ask_ollama
-- can test ollama works w/o running full pipeline
-
+if __name__ == "__main__"
 ---
 
-### ai_correction/gemini_correct.py
+### ai_correction/ollama_correct.py
 
-- sends raw vosk txt to gemini api to correct
-- requires GEMINI_API_KEY exported as environmental var
+Sends raw Vosk txt to local Ollama server for correction.
+Ollama runs locally (http://localhost:11434) - no internet needed.
 
-imports:
-- os: reads GEMINI_API_KEY from environment (so not in db)
-- google.genai: Gemini API client library
+**imports:**
+- `requests`: sends HTTP request to local Ollama server
 
-contatnts at top:
-- MODEL_NAME: which gemini model to use (gemini-2.5-flash)
+**constants** (defined once for reuse):
+- `MODEL_NAME`: uses gemma3
+- `OLLAMA_URL`: address of local Ollama API endpoint
 
-ask_gemini(text):
-- creates client using API key from environment
-- build prompt: correct transcript, return only corrected sentence
-- generates respons using model & prompt
-- returns correct txt w/o trailing new lines
+**ask_ollama(prompt):**
+- posts prompt to Ollama w/ `stream:False` (full response, not token-by-token)
+- `raise_for_status()`: error handling - stops if server returns error code
+- returns corrected txt stripped of extra ws
 
-differs from ask_ollama:
-- no local server - sends requests to googles API vis net
-- raises KeyError if key missing or invalid
+**if __name__ == "__main__":**
+- test block - runs only when file directly executed
+- doesn't run when main.py imports ask_ollama
+- can test Ollama works w/o running full pipeline
 
 ---
 
 ### vosk_transcription/transcribe.py
 
-- Records one speaker turn via mic & returns transcript duration
-- uses vosk for offline speech-to-text - no web needed
+Records one speaker turn via mic and returns transcript and duration.
+Uses Vosk for offline speech-to-text - no internet needed.
 
-imports:
-- json: vosk returns results as JSON strings, json.loads() converts to dict
-- queue: thread-safe queues, mic runs in one thread, vosk process in other
-- sounddevice: capture raw audio from mic as stream
-- vosk Model: loads speech recognition model from disk
-- vosk KaldiRecognizer: speech-to-text conversion
-- time: high-precision timing for duration measurement
+**imports:**
+- `json`: Vosk returns JSON strings, `json.loads()` converts to dict
+- `queue`: thread-safe queue, mic runs in one thread, Vosk processes in another
+- `sounddevice`: captures raw audio from mic as stream
+- `vosk Model`: loads speech recognition model from disk
+- `vosk KaldiRecognizer`: speech-to-text conversion
+- `time`: high-precision timing for duration
 
-constants:
-- MODEL_PATH: path to vosk model (must dnlwd manual; gitignored)
-- SAMPLE_RATE: 16k samples/sec - hard model requirement; can't change
+**constants:**
+- `MODEL_PATH`: path to Vosk model (downloaded manually, gitignored)
+- `SAMPLE_RATE`: 16k samples/sec - hard model requirement, not changeable
 
-module-level:
-- q = queu.Queu(): shared b/t callback and record_rurn
-- if call 'q' inside function it resets ea. call & audio doesnt reach vosk
+**module-level:**
+- `q = queue.Queue()`: shared between `callback` and `record_turn`
+- if defined inside a function it resets each call, audio never reaches Vosk
 
-callback(indata, frames, time, status):
-- nvr called directly - sd auto-calls every 1/2 sec
-- blocksize 800 at 16k smple/sec - .5 sec. per chunck
-- converts audio to bytes (sd gives np arr, vosk needs bytes)
+**callback(indata, frames, time, status):**
+- never called directly - sounddevice calls it automatically every 0.5 sec
+- blocksize 8000 at 16000 samples/sec = 0.5 sec per chunk
+- converts audio to bytes (sounddevice gives numpy array, Vosk needs bytes)
 
-record_turn(current_speaker=None)
-- default = None: 1st call has no speaker, prompts for name
-- subsequent calls skip prompt & start recording immediately
-- full_text = "": initialised empty, accumulates confirmed vosk output during loop
-- AcceptWaveForm returns true only when vosk has complete & recognizable phrase
-- result.get("text", ""): safe dict access, return empty str if key missing
-- if text: guard against silence/noise - accumulates real content only
-- end_time outside except: capture time whether recording stopped or not
-- final_raw_text: last fragment that was processing when ctrl+c pressed
-- phrase = (full_text + final_raw_text).strip(): combines both for complete utterance
-- Sergiu's bug: returned only final_raw_text, discarding full_text
-- returns: speaker name, full phrase, duration in sec.
+**record_turn(current_speaker=None):**
+- `None` default: first call has no speaker yet, prompts for name
+- subsequent calls skip prompt, recording starts immediately
+- `full_text = ""`: starts empty, accumulates confirmed Vosk output during loop
+- `AcceptWaveform`: returns True only
 
 ---
 
-## common/helpers.py
+### common/helpers.py
 
-- Shared utilities used by main.py to load and save csv file
-- Keeps file i/o in one place - all stages use same functions
+Shared utilities used by main.py to load and save CSV files.
+Keeps file I/O in one place - all stages use the same functions.
 
-imports:
-- pandas: read_csv and to_csv for handling
-- os: creates directories b4 saving
+**imports:**
+- `pandas`: read_csv and to_csv for CSV handling
+- `os`: creates directories before saving
 
-load_csv(filepath):
-- read csv from disk to pd df
-- Time: O(n): reads 'n' rows from disk
-- Space: O(n): stores rown in memory
+**load_csv(filepath):**
+- reads CSV from disk into a Pandas dataframe
+- Time O(n): reads n rows from disk
+- Space O(n): stores n rows in memory
 
-save_csv(df, filepath):
-- os.path.dirname extracts folder path from full filepath
-- os.maksdirs creates folder itself if doesn't exist
-- exist_ok=True: no error if folder already exists
-- index=false: turn of pd's rom nums from csv putput
-- Time: O(n): write n rows to disk
-- Space: O(1): no new memory, df already there
+**save_csv(df, filepath):**
+- `os.path.dirname`: extracts folder path from full filepath
+- `os.makedirs`: creates folder if it doesn't exist
+- `exist_ok=True`: no error if folder already exists
+- `index=False`: suppresses Pandas row numbers from CSV output
+- Time O(n): writes n rows to disk
+- Space O(1): no new memory allocated, dataframe already exists
 
 ---
 
-## enrihment/enrich_dataset.py
+### enrichment/enrich_dataset.py
 
-- Takes the correct csv as a pd df and adds five calculated cols.
-- No AI - only python calc. Runs post-correction
-- Time: O(n) per operation, Space: O(n) for new col.
+Takes corrected CSV as Pandas dataframe and adds five calculated columns.
+No AI - pure Python calculation. Runs after correction is complete.
+Time O(n) per operation, Space O(n) for new columns.
 
-question_flag:
-- str(x): safety conversion - pd can read null vals as flt NaN
-- calling .strip() on NaN gives AttributeError, str(x) prevents this
-- .endswith("?"): True if corrected text ends w/ quesiton mark
+**question_flag:**
+- `str(x)`: safety conversion - Pandas can read missing values as float NaN
+- calling `.strip()` on NaN throws AttributeError, `str(x)` prevents this
+- `.endswith("?")`: True if corrected text ends with question mark
 
-num_words:
-- split() with no argument handles multiple spaces b/t words
-- split(' ') would count emplty str b/t double spaces
+**num_words:**
+- `split()` with no argument handles multiple spaces between words
+- `split(' ')` would count empty strings between double spaces
 
-text_size_chars:
-- len(str(x)) inclusive of letters, spaces, punctuation
-- Sergiu's version excluded spaces and punctuation
+**text_size_chars:**
+- `len(str(x))` counts everything: letters, spaces, punctuation
+- Sergiu's version excluded spaces and punctuation - wrong answer
 
-speech_rate_wps:
-- axis=1, applies acrosse ea. row, needs both num_words & time_taken_sec
-- guard: if time_taken_sec is 0 it returns 0 instead of ZeroDivisionError
+**speech_rate_wps:**
+- `axis=1`: applies across each row, needs both `num_words` and `time_taken_sec`
+- guard: if `time_taken_sec` is 0 returns 0 instead of `ZeroDivisionError`
 
-speaker_turn_id:
-- group.by("name"): groups all rows by speaker
-- cumcount(): default counts python from 0 w/in ea. group
-- +1: starts count at 1 instead of 0
+**speaker_turn_id:**
+- `groupby("name")`: groups all rows by speaker
+- `cumcount()`: counts from 0 within each group
+- `+1`: shifts to start at 1 as brief requires
 
-## main.py
+### main.py
 
-- Entry & orchestration layer for full pipeline
-- no logic
+Entry point and orchestration layer for the full pipeline.
+No logic - imports one function from each module.
+Separation of concerns: each import represents one stage.
 
-imports:
-- imports one func. from ea. module
-- seperates concerns: ea. import represents one stage
+**imports:**
+- one function per module, each representing one pipeline stage
+- `datetime`: timestamps per turn
+- `pandas`: converts list of dicts to dataframe after recording
 
-file path constants:
-- defined once at top, change in one place if need
-- three files protect ea. stage independantly
-    -   RAW_FILE: safe if stages 2/3 crash
-    -   CORRECT_FILE: safe if stage 3 crashes
-    -   FINAL_FILE: read by validation and analytics
+**file path constants:**
+- defined once at top, change in one place if needed
+- three files protect each stage independently
 
-correct_with_fallback(text):
-- fallback chain: gemini -> Ollama -> orgin. txt
-- except Exception as e: catches error, stores as e, continues
+**correct_with_fallback(text):**
+- fallback chain: Gemini → Ollama → original text
+- `except Exception as e`: catches error, stores as e, execution continues
 - recording session cannot be killed by API failure
 
-==========================================================
+=================================================
 
 **Stage 1:**
-- all_data: list of dicts, one per turn
-- current_speaker=None; signals prompt from first call
-- ternary: keeps speaker or switches in new name added
+- `all_data`: list of dicts, one per turn
+- `current_speaker=None`: signals prompt on first call
+- ternary: keeps current speaker or switches if new name typed
 - timestamp captured per turn after recording completes
-- KeyboardInterrupt caught clean, execution continues
-- guard: empty all_data exits b4 creating blank df
-- pd. DataFrame(all_data): converts list of dicts to table
-- save to protect raw recordings b4 API call starts
+- `KeyboardInterrupt` caught cleanly, execution continues
+- guard: empty `all_data` exits before creating blank dataframe
+- `pd.DataFrame(all_data)`: converts list of dicts to table
+- saved immediately: raw recordings protected before API calls begin
 
 **Stage 2:**
-- df.copy(): independant copy so raw df stays untouched
-- .apply(correct_with_fallback): one API call per row, O(n)
-- corrected data saved to protect b4 enrichment
+- `df.copy()`: independent copy so raw df stays untouched
+- `.apply(correct_with_fallback)`: one API call per row, O(n)
+- saved immediately: corrected data protected before enrichment
 
 **Stage 3:**
-- correct_df passed in: enrich reads from 'text' col. only in correct_df
-- enrich_dataframe adds five calculated cols, returns modified df
-- saved as FINAL_FILE for validation/analytics to read
+- `correct_df` passed in: enrich reads from `text` col. only in `correct_df`
+- `enrich_dataframe` adds five calculated columns, returns modified df
+- saved as `FINAL_FILE`: read by validation and analytics
 
 **Stage 4:**
-- validate boolean t/f
-- if false: prints errors & return stops pipeline
+- `validate` returns True or False
+- if False: prints errors and `return` stops pipeline completely
 - no analytics on broken data
 
 **Stage 5:**
-- one line: answerrs six questions, prints to console
+- one line: answers six questions, prints to console
 - no save, no return value needed
 
 ==========================================================
 
+**Placeholder**
 validation/__init__.py
 -- walkthrough to be added after recording session and testing --
 
 ==========================================================
 
-analyse/__init__.py
+**analyse/__init__.py**
 -- walkthrough to be added once file is written --

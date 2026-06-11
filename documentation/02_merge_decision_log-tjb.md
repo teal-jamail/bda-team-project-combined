@@ -1,4 +1,4 @@
-# BDA Team Project — Notes
+# BDA Team Project — Merge Decision Log
 
 What this project is
 
@@ -9,7 +9,6 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 Output: a CSV with 25+ rows and a printed analytics report
 
 ---
-
 
 ## The five stages
 
@@ -56,8 +55,6 @@ Stops pipeline and prints errors if anything wrong
 Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
-
----
 
 ---
 
@@ -155,13 +152,11 @@ session ends when team decides
 ## Team task assignments
 Ea. person 1 stage
 
-| Person | Stage | File                          |   Feeds into |
-|--------|-------|------ -----------------|---------------------|
-| Sergiu | 1 - Record | vosk_transcription/transcribe.py | Nita |
-| Nita   | 2 - Correct | ai_correction/ollama_correct.py | Ebou |
-| Ebou   | 3 - Enrich | enrichment/enrich_dataset.py | Alina |
-| Alina  | 4 - Validate | validation/__init__.py | Teal |
-| Teal   | 5 - Analyse | analyse/__init__.py | end output |
+- Sergiu | 1 - Record | vosk_transcription/transcribe.py | Nita |
+- Nita   | 2 - Correct | ai_correction/ollama_correct.py | Ebou |
+- Ebou   | 3 - Enrich | enrichment/enrich_dataset.py | Alina |
+- Alina  | 4 - Validate | validation/__init__.py | Teal |
+- Teal   | 5 - Analyse | analyse/__init__.py | end output |
 
 - integration - single repo: teal-jamail/bda-team-project-combined
 
@@ -169,7 +164,6 @@ Ea. person 1 stage
 - dwnld vosk model locally (vosk-model-en-us-0.22-lgraph) since gitignored
 - test 'record_turn()' works
 - make sure 'sounddevice' installed [not pyaudio]
-
 
 ---
 

@@ -53,7 +53,7 @@
 - recording session needs all 5 people present
 
 ## Next actions
-- write team instructions
+- copy for annoted and return originals .py
 - write analyse/__init__.py
 - update requirements.txt
 - schedule recording session

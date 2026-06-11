@@ -1,6 +1,6 @@
 ========= Setup & Task Breakdown =========
-## Repo: teal-jamail/bda-team-project-combined
 
+## Repo: teal-jamail/bda-team-project-combined
 Hey all, here's the combined repo to share from single source.
 Let's work from this going forward (instead of original repos 
 [they have been preserved too])

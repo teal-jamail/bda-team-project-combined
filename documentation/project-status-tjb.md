@@ -41,10 +41,9 @@
 - analyse/__init__.py (Teal)
 
 ## Not started
+- !! recording session (all 5 people, 25 rows minimum)
 - requirements.txt update
 - Vosk model download and local test
-- team instructions per person
-- recording session (all 5 people, 25 rows minimum)
 - README for submission
 - complexity writeup (Ebou)
 - team video (Alina)

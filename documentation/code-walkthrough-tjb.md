@@ -204,4 +204,38 @@ correct_with_fallback(text):
 
 ==========================================================
 
+### Three files
+- raw crashes → lose nada from correction or enrichment
+- correction crashes → still have raw recording
+- enrichment crashes → still have all 25 corrected rows
 
+---
+
+**Stage 1:**
+- all_data: list of dicts, one per turn
+- current_speaker=None; signals prompt from first call
+- ternary: keeps speaker or switches in new name added
+- timestamp captured per turn after recording completes
+- KeyboardInterrupt caught clean, execution continues
+- guard: empty all_data exits b4 creating blank df
+- pd. DataFrame(all_data): converts list of dicts to table
+- save to protect raw recordings b4 API call starts
+
+**Stage 2:**
+- df.copy(): independant copy so raw df stays untouched
+- .apply(correct_with_fallback): one API call per row, O(n)
+- corrected data saved to protect b4 enrichment
+
+**Stage 3:**
+- correct_df passed in: enrich reads from 'text' col. only in correct_df
+- enrich_dataframe adds five calculated cols, returns modified df
+- saved as FINAL_FILE for validation/analytics to read
+
+**Stage 4:**
+- validate boolean t/f
+- if false: prints errors & return stops pipeline
+- no analytics on broken data
+
+S**Stage 5:**
+- one line: answerrs six questions, prints to console
+- no save, no return value needed

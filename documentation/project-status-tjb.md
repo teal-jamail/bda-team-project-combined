@@ -37,26 +37,42 @@
   - notes-ntm.txt
 - first push to GitHub complete
 
+- annotated code docs preserved in documentation/annotated_code_docs/
+- team-notes-overview-tjb.md deleted (content distributed across other docs)
+- task_breakdown-tjb.md written and sent to team (11.06)
+- 11.06 meeting rundown sent via email and group chat
+
 ## In progress
 - analyse/__init__.py (Teal)
 
 ## Not started
-- !! recording session (all 5 people, 25 rows minimum)
+- !! recording session (all 5 people, 25 rows minimum) — Mon 10:15
 - requirements.txt update
-- Vosk model download and local test
+- Vosk model download and local test (Sergiu)
+- Alina recording script
 - README for submission
 - complexity writeup (Ebou)
-- team video (Alina)
+- team video (Alina) — after pipeline complete
 
 ## Blockers
 - pipeline cannot be tested until Vosk model downloaded locally
 - recording session needs all 5 people present
 
-## Next actions
-- copy for annoted and return originals .py
+## Next actions | (11.06)
+- write analyse/__init__.py
+- update requirements.txt
+- Vosk model download and local test (Sergiu)
+- Alina to write recording script
+- Mon 10:15 — group recording session (pipeline data, not video)
+- complexity writeup (Ebou)
+- write submission README
+- record team video (after pipeline complete)
+- upload video to OneDrive → share with s.sotiriadis@bbk.ac.uk
+- add validation and analyse walkthroughs to code-walkthrough-tjb.md once written
+- Nita & Serg to review documention
+
+## Next actions | (08.06)
+- copy for annoted and save originals .py
 - write analyse/__init__.py
 - update requirements.txt
 - schedule recording session
-- Alina script
-- Mon. 10.15 record w/ group
-- - send meeting recording

@@ -8,7 +8,7 @@ The app records, transcribes, corrects, enriches, validates, and analyses
 
 Output: a CSV with 25+ rows and a printed analytics report
 
-### Three files
+### Three file structure
 
 -   RAW_FILE: raw crashes → lose nada from correction or enrichment
 -   CORRECT_FILE: correction crashes → still have raw recording
@@ -252,3 +252,13 @@ correct_with_fallback(text):
 **Stage 5:**
 - one line: answerrs six questions, prints to console
 - no save, no return value needed
+
+==========================================================
+
+validation/__init__.py
+-- walkthrough to be added after recording session and testing --
+
+==========================================================
+
+analyse/__init__.py
+-- walkthrough to be added once file is written --

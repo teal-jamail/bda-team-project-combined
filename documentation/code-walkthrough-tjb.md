@@ -16,14 +16,15 @@ Output: a CSV with 25+ rows and a printed analytics report
 
 ==========================================================
 
-## The five stages
+###  The five stages
+---
 
-### Stage 1: Record and transcribe (vosk_transcription/)
+####  Stage 1: Record and transcribe (vosk_transcription/)
 Microphone casptures speech
 Vosk converts audio to raw text file offline - no internet needed
 Vosk is imperfect: no punctuation, mishears words, no capatalisation
 
-**Output:** data/raw_transcript.csv
+##### Output:** data/raw_transcript.csv
 
 ---
 ### Stage 2: AI correction (ai_correction/)
@@ -32,7 +33,7 @@ Gemeni fixes spelling, add punctuation, keeps original meaning
 If Gemini fails, Ollama is tried as a fallback
 If both fail, the orgiginal raw text is kept unchanged
 
-**Output:** data/correction_transcript.csv
+#### Output:** data/correction_transcript.csv
 
 ---
 ### Stage 3: Enrichment (enrichment/)
@@ -44,7 +45,7 @@ text_size_chars: how many characters (w/ or w/o WS)
 speech_rate_wps: words divided by seconds
 speaker_turn_id: which turn number for speaker
 
-**Output:** data/final_transcript.csv
+#### Output: data/final_transcript.csv
 
 ---
 ### Stage 4: Validation (validation/)
@@ -59,29 +60,6 @@ Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
 
 ==============================================
-
-### ai_correction/ollama_correct.py
-
-Sends raw Vosk txt to local Ollama server for correction.  
-Ollama runs locally (http://localhost:11434) - no internet needed.
-
-imports
----
-- `requests`: sends HTTP request to local Ollama server
-
-constants (defined once for reuse)
----
-- `MODEL_NAME`: uses gemma3
-- `OLLAMA_URL`: address of local Ollama API endpoint
-
-ask_ollama(prompt)
----
-- posts prompt w/ `stream:False` (full response, not token-by-token)
-- `raise_for_status()`: error handling - stops if server returns error code
-- returns corrected txt stripped of extra ws
-
-if __name__ == "__main__"
----
 
 ### ai_correction/ollama_correct.py
 

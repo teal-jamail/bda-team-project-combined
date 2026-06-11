@@ -1,5 +1,21 @@
 # BDA Team Project — Code Walkthrough
 
+## What this project is
+
+A meeting recorder and speech analytics pipeline.
+Five people sit together, each speakc short phrases into a mic
+The app records, transcribes, corrects, enriches, validates, and analyses
+
+Output: a CSV with 25+ rows and a printed analytics report
+
+### Three files
+
+-   RAW_FILE: raw crashes → lose nada from correction or enrichment
+-   CORRECT_FILE: correction crashes → still have raw recording
+-   FINAL_FILE: enrichment crashes → still have all 25 corrected rows
+
+==========================================================
+
 ## The five stages
 
 ### Stage 1: Record and transcribe (vosk_transcription/)
@@ -7,16 +23,18 @@ Microphone casptures speech
 Vosk converts audio to raw text file offline - no internet needed
 Vosk is imperfect: no punctuation, mishears words, no capatalisation
 
-Output: data/raw_transcript.csv
+**Output:** data/raw_transcript.csv
 
+---
 ### Stage 2: AI correction (ai_correction/)
 Ea. raw vosk transcript sent to Gemini for correction
 Gemeni fixes spelling, add punctuation, keeps original meaning
 If Gemini fails, Ollama is tried as a fallback
 If both fail, the orgiginal raw text is kept unchanged
 
-Output: data/correction_transcript.csv
+**Output:** data/correction_transcript.csv
 
+---
 ### Stage 3: Enrichment (enrichment/)
 Python calculates five new columns from corrected text
 No AI - pure calculation
@@ -26,13 +44,15 @@ text_size_chars: how many characters (w/ or w/o WS)
 speech_rate_wps: words divided by seconds
 speaker_turn_id: which turn number for speaker
 
-Output: data/final_transcript.csv
+**Output:** data/final_transcript.csv
 
+---
 ### Stage 4: Validation (validation/)
 Check final csv before analysis runs
 Min. 25 rows, no missing values, correct types, valid ranges
 Stops pipeline and prints errors if anything wrong
 
+---
 ### Stage 5: Analytics (analysis/)
 Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
@@ -204,13 +224,6 @@ correct_with_fallback(text):
 
 ==========================================================
 
-### Three files
-- raw crashes → lose nada from correction or enrichment
-- correction crashes → still have raw recording
-- enrichment crashes → still have all 25 corrected rows
-
----
-
 **Stage 1:**
 - all_data: list of dicts, one per turn
 - current_speaker=None; signals prompt from first call
@@ -236,6 +249,6 @@ correct_with_fallback(text):
 - if false: prints errors & return stops pipeline
 - no analytics on broken data
 
-S**Stage 5:**
+**Stage 5:**
 - one line: answerrs six questions, prints to console
 - no save, no return value needed

@@ -50,13 +50,13 @@ speaker_turn_id: which turn number for speaker
 ##### Output: data/final_transcript.csv
 
 ---
-### Stage 4: Validation (validation/)
+#### Stage 4: Validation (validation/)
 Check final csv before analysis runs
 Min. 25 rows, no missing values, correct types, valid ranges
 Stops pipeline and prints errors if anything wrong
 
 ---
-### Stage 5: Analytics (analysis/)
+#### Stage 5: Analytics (analysis/)
 Answers six question about the meeting using pandas
 Who spoke most/least, total time, avg. time, most questions
 top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker

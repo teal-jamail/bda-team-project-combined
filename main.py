@@ -49,8 +49,8 @@ def main():
 
     try:
         while True:
-            speaker, phrase, time_taken_sec = record_turn (current_speaker)
-            
+            speaker, phrase, time_taken_sec = record_turn(current_speaker)
+
             all_data.append({
                 "timestamp": datetime.now().isoformat(),
                 "name": speaker,
@@ -60,13 +60,6 @@ def main():
 
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()
             current_speaker = change if change else speaker
-            
-            # all_data.append({
-                # "timestamp": datetime.now().isoformat(),
-                # "name": ~~current_~~ speaker,
-                # "raw_text_vosk": phrase,
-                # "time_taken_sec": time_taken_sec
-            # }) moved to after speaker input
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")

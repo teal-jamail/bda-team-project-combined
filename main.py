@@ -2,7 +2,7 @@ from vosk_transcription.transcribe import record_turn
 from ai_correction.gemini_correct import ask_gemini_to_correct
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
-# from validation import validate
+from validation.validation import validate
 # from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
 from datetime import datetime
@@ -49,7 +49,7 @@ def main():
 
     try:
         while True:
-            speaker, phrase, time_taken_sec = record_turn(current_speaker)
+            current_speaker, phrase, time_taken_sec = record_turn(current_speaker)
 
             all_data.append({
                 "timestamp": datetime.now().isoformat(),
@@ -58,8 +58,9 @@ def main():
                 "time_taken_sec": time_taken_sec
             })
 
+
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()
-            current_speaker = change if change else speaker
+            current_speaker = change if change else current_speaker
 
             
 
@@ -96,14 +97,14 @@ def main():
 
 
     # ====== Stage 4: Validation ======
-    # print("\nRunning validation...\n")
+    print("\nRunning validation...\n")
     
-    # is_valid = validate(FINAL_FILE)
+    is_valid = validate(FINAL_FILE)
 
-    # if not is_valid:
+    if not is_valid:
 
-    #     print("\nFix validation errors before continuing.")
-    #     return
+        print("\nFix validation errors before continuing.")
+        return
 
 
     # # ====== Stage 5: Analytics ======

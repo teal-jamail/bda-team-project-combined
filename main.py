@@ -2,8 +2,8 @@ from vosk_transcription.transcribe import record_turn
 from ai_correction.gemini_correct import ask_gemini_to_correct
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
-from validation import validate
-from analyse import analyse_dataset
+# from validation import validate
+# from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
 from datetime import datetime
 import pandas as pd
@@ -60,6 +60,8 @@ def main():
 
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()
             current_speaker = change if change else speaker
+
+            
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")

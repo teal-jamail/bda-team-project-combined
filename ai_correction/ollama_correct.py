@@ -17,6 +17,8 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 
 def ask_ollama(prompt):
+    prompt.append("\n\n Correct the transcript above. Return only the corrected sentence, without any additional text or explanation.")
+    # this sends a POST request to the Ollama server and asks the Ai model to correct the transcript.
     response = requests.post(
         OLLAMA_URL,
         json={"model": MODEL_NAME, "prompt": prompt, "stream": False},

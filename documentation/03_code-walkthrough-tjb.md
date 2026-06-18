@@ -177,4 +177,40 @@ Separation of concerns: each import represents one stage.
 
 ### analyse/__init__.py
 
--- walkthrough to be added once file is written --
+- Takes the validated CSV and answers six questions about the meeting using pd.
+- Final stage - reads from 'FINAL_FILE', prints results to console, nothing saved
+
+#### imports:
+- 'pandas': groupby, sum, mean, sort_values, for all calculations
+
+#### analyse_dataset
+- `pd.read_csv(filepath)`: Time O(n), Space: O(n) - same as `load_csv`
+
+#### Q1 & Q2 - most/least words:
+- `df.groupby("name")["num_words"].sum()`: one expensive groupby, reused for both questions
+- `idmax()`/ `max()`: extracts the one speaker with the highest total and their count
+- `idmin()` / `min`(): same pattern, lowest total
+- single winner question → extract one val, no loop 
+
+#### Q3 - total speaking time:
+`df.["time_taken_sec"].sum():` no groupby b/c meeting-wide total [not per speaker]
+
+#### Q4 - avg. speaking time per speaker
+- 'df.groupby("name)["time_taken_sec"].mean()`: single speaker avg.
+- `.items()` loop: "per speaker" questions need every value
+- `idmax()` / `idmin()`: applies only to high/low qs , (not show all)
+
+#### Q5 - most questions asked:
+- `df[df["question_flag"] == True]`: filters to only rows w/ question
+- same row structure, fewer rows - not new df shape
+- `.groupby("name").size()`: counts filtered rows per speaker
+- guard: `if not questions_per_speaker.empty` - if no qs the filter set is empty and `idmax()` would crash; prints clean message
+
+#### Q6 - top 5 speakers by total speaking time:
+- `df.groupby("name")["time_taken_sec"].sun()`: total time per speaker
+- `sort_values(ascending=False)`: highest first
+- `.head(5)`: takes top 5 [even though head default is 5, this makes the top 5 more explicit]
+- `enumerate(top6.items()1)`: starts rank count at 1 instead of 0
+
+#### Q7 avg. speech rate per speaker
+- same patter as Q4: "per speaker" loops through all vals

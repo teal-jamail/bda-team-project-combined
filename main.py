@@ -1,5 +1,5 @@
 from vosk_transcription.transcribe import record_turn
-from ai_correction.gemini_correct import ask_gemini_to_correct
+from ai_correction.gemini_correct import ask_gemini
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
 from validation.validation import validate
@@ -17,7 +17,7 @@ FINAL_FILE = "data/final_transcript.csv"
 def correct_with_fallback(text):
 
     try:
-        result = ask_gemini_to_correct(text)
+        result = ask_gemini(text)
         if result:
             return result
 

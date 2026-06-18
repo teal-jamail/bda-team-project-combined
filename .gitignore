@@ -2,6 +2,6 @@
 __pycache__/
 *.pyc
 vosk-model-en-us-0.22-lgraph/
-data/
 .env
 *.env
+__pycache__/

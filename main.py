@@ -50,13 +50,15 @@ def main():
     try:
         while True:
             current_speaker, phrase, time_taken_sec = record_turn(current_speaker)
-
-            all_data.append({
-                "timestamp": datetime.now().isoformat(),
-                "name": current_speaker,
-                "raw_text_vosk": phrase,
-                "time_taken_sec": time_taken_sec
-            })
+            if(not current_speaker):
+                all_data.append({
+                    "timestamp": datetime.now().isoformat(),
+                    "name": current_speaker,
+                    "raw_text_vosk": phrase,
+                    "time_taken_sec": time_taken_sec
+                })
+            else:
+                print("No data recorded for this turn.")
 
 
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()

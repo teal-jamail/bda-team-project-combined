@@ -8,12 +8,34 @@ from common.helpers import load_csv, save_csv
 from datetime import datetime
 import pandas as pd
 
-
-
 RAW_FILE = "data/raw_transcript.csv"
 CORRECT_FILE = "data/correct_transcript.csv"
 FINAL_FILE = "data/final_transcript.csv"
 
+def recording_session():
+    all_data = []
+    current_speaker = input("Enter speaker name: ").strip()
+
+    while not current_speaker:
+        current_speaker = input("Speaker cannot be empty. Enter name: ").strip()
+
+    try:
+        while True:
+            phrase, time_taken_sec = record_turn(current_speaker)
+            all_data.append({
+                "timestamp": datetime.now().isoformat(),
+                "name": current_speaker,
+                "raw_text_vosk": phrase,
+                "time_taken_sec": time_taken_sec
+            })
+            
+            change = input("Press ENTER or type new speaker name: ").strip()
+            current_speaker = change or current_speaker
+
+    except KeyboardInterrupt:
+        print("\nRecording stopped.")
+
+    return all_data
 
 def correct_with_fallback(text):
 
@@ -34,68 +56,19 @@ def correct_with_fallback(text):
 
     return text, "raw"
 
-def main():
-    print("\n=============== Team Meeting Recorder Started ===============\n")
-
-    # ====== Stage 1: Record and transcribe ======
-
-    all_data = []
-    # current_speaker = None
-    current_speaker = input("Enter speaker name: ").strip()
-    while not current_speaker:
-        current_speaker = input("Speaker cannot be empty. Enter name: ").strip()
-
-    try:
-        while True:
-
-            phrase, time_taken_sec = record_turn(current_speaker)
-
-            all_data.append({
-                "timestamp": datetime.now().isoformat(),
-                "name": current_speaker,
-                "raw_text_vosk": phrase,
-                "time_taken_sec": time_taken_sec
-            })
-
-            change = input("\nPress ENTER to continue or type new speaker name: ").strip()
-            
-            current_speaker = change if change else current_speaker
-
-    except KeyboardInterrupt:
-        print("\nRecording stopped.")
-
-    if not all_data:
-        print("No data recorded.")
-        return
-
-    df = pd.DataFrame(all_data)
-    save_csv(df, RAW_FILE)
-
-    print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
-
-    # ====== Stage 2: AI correction ======
-    # print("\nStarting AI correction...\n")
-    
-    # correct_df = df.copy()
-    # correct_df["text"] = correct_df["raw_text_vosk"].apply(correct_with_fallback)
-    # save_csv(correct_df, CORRECT_FILE)
-
-    # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
-
-    print("\nStarting AI correction...\n")
+def ai_correction(df):
 
     correct_df = df.copy()
 
     texts = []
 
-    source_count= {
+    source_count = {
         "gemini": 0,
         "ollama": 0,
         "raw": 0
     }
 
     text_row = correct_df["raw_text_vosk"].fillna("")
-
     total_rows = len(text_row)
 
     for i, text in enumerate(text_row, start=1):
@@ -107,10 +80,34 @@ def main():
         texts.append(corrected)
 
         source_count[source] += 1
-        
+
         print(f"Source used: {source}")
 
     correct_df["text"] = texts
+
+    return correct_df, total_rows, source_count
+
+def main():
+    print("\n=============== Team Meeting Recorder Started ===============\n")
+
+    # ====== Stage 1: Record and transcribe ======
+
+    all_data = recording_session()
+
+    if not all_data:
+        print("No data recorded.")
+        return
+
+    df = pd.DataFrame(all_data)
+
+    save_csv(df, RAW_FILE)
+
+    print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
+
+    # ====== Stage 2: AI correction ======
+    print("\nStarting AI correction...\n")
+
+    correct_df, total_rows, source_count = ai_correction(df)
 
     save_csv(correct_df, CORRECT_FILE)
 

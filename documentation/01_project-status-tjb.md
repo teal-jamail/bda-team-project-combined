@@ -2,7 +2,7 @@
 ## teal-jamail/bda-team-project-combined
 
 ## Thurs. discussion - quick reference
-- filename check: confirm what main.py actually writes (correct_transcript.csv vs correction_transcript.csv) - docs disagree
+- - filename check: what main.py actually writes (correct_transcript.csv vscorrection_transcription.csv) - docs diff
 - merge strategy agreed: Sergiu merging all branches into a separate integration branch first, main stays protected
 - NOT blanket "accept theirs" - validation/__init__.py must come from main (tested, working) not Sergiu's or Alina's branch - both have a critical bug (validate() never returns True/False)
 - main.py protected - last-turn fix already pushed to main, don't let it get reverted by Sergiu's incremental-write rewrite without comparison

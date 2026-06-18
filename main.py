@@ -40,11 +40,15 @@ def main():
     # ====== Stage 1: Record and transcribe ======
 
     all_data = []
-    current_speaker = None
+    # current_speaker = None
+    current_speaker = input("Enter speaker name: ").strip()
+    while not current_speaker:
+        current_speaker = input("Speaker cannot be empty. Enter name: ").strip()
 
     try:
         while True:
-            current_speaker, phrase, time_taken_sec = record_turn(current_speaker)
+
+            phrase, time_taken_sec = record_turn(current_speaker)
 
             all_data.append({
                 "timestamp": datetime.now().isoformat(),
@@ -53,11 +57,9 @@ def main():
                 "time_taken_sec": time_taken_sec
             })
 
-
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()
-            current_speaker = change if change else current_speaker
-
             
+            current_speaker = change if change else current_speaker
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")
@@ -92,7 +94,7 @@ def main():
         "raw": 0
     }
 
-    text_row = correct_df["raw_text_vosk"]
+    text_row = correct_df["raw_text_vosk"].fillna("")
 
     total_rows = len(text_row)
 

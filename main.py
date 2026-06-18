@@ -1,5 +1,5 @@
 from vosk_transcription.transcribe import record_turn
-from ai_correction.gemini_correct import ask_gemini_to_correct
+from ai_correction.gemini_correct import ask_gemini
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
 from validation.validation import validate
@@ -9,6 +9,7 @@ from datetime import datetime
 import pandas as pd
 
 
+
 RAW_FILE = "data/raw_transcript.csv"
 CORRECT_FILE = "data/correct_transcript.csv"
 FINAL_FILE = "data/final_transcript.csv"
@@ -16,28 +17,22 @@ FINAL_FILE = "data/final_transcript.csv"
 
 def correct_with_fallback(text):
 
-    try:
-        result = ask_gemini_to_correct(text)
-        if result:
-            return result
+    models = [
+        ("gemini", ask_gemini),
+        ("ollama", ask_ollama)
+    ]
 
-    except Exception as e:
-        print("Gemini failed:", e)
-
-
-    try:
-        result = ask_ollama(text)
-        if result:
-            return result
-   
-    except Exception as e:
-
-        print("Ollama failed:", e)
+    for name, model in models:
+        try:
+            result = model(text)
+            if result and result.strip():
+                return result.strip(), name
+        except Exception as e:
+            print(f"{name.capitalize()} failed: {e}")
 
     print("Both AI corrections failed, keeping original.")
 
-    return text
-
+    return text, "raw"
 
 def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
@@ -77,14 +72,54 @@ def main():
     print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
 
     # ====== Stage 2: AI correction ======
-    print("\nStarting AI correction...\n")
+    # print("\nStarting AI correction...\n")
     
+    # correct_df = df.copy()
+    # correct_df["text"] = correct_df["raw_text_vosk"].apply(correct_with_fallback)
+    # save_csv(correct_df, CORRECT_FILE)
+
+    # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
+
+    print("\nStarting AI correction...\n")
+
     correct_df = df.copy()
-    correct_df["text"] = correct_df["raw_text_vosk"].apply(correct_with_fallback)
+
+    texts = []
+
+    source_count= {
+        "gemini": 0,
+        "ollama": 0,
+        "raw": 0
+    }
+
+    text_row = correct_df["raw_text_vosk"]
+
+    total_rows = len(text_row)
+
+    for i, text in enumerate(text_row, start=1):
+
+        print(f"\n[{i}/{total_rows}] Correcting: {str(text)[:40]}...")
+
+        corrected, source = correct_with_fallback(text)
+
+        texts.append(corrected)
+
+        source_count[source] += 1
+        
+        print(f"Source used: {source}")
+
+    correct_df["text"] = texts
+
     save_csv(correct_df, CORRECT_FILE)
 
     print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
 
+    print("\n============================== SUMMARY ==============================")
+    print(f"Processed rows: {total_rows}")
+    print(f"Gemini used: {source_count['gemini']}")
+    print(f"Ollama used: {source_count['ollama']}")
+    print(f"Raw used: {source_count['raw']}")
+    print("======================================================================\n")
 
     # ====== Stage 3: Enrichment ======
     print("\nEnriching dataset...\n")

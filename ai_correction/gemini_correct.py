@@ -12,7 +12,7 @@ from google import genai
 MODEL_NAME = "gemini-2.5-flash" 
 
 
-def ask_gemini_to_correct(text_to_correct):
+def ask_gemini(text_to_correct):
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
     
     prompt = (

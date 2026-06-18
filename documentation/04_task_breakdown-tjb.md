@@ -14,7 +14,8 @@ git clone https://github.com/teal-jamail/bda-team-project-combined.git
 cd bda-team-project-combined
 python3 -m venv .venv
 source .venv/bin/activate
-pip install pandas vosk sounddevice google-generativeai requests
+pip install pandas vosk sounddevice google-genai requests
+Settup gemini and ollama
 ```
 * don't push 'venve/ folder to github or api keys
 

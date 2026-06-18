@@ -1,9 +1,9 @@
 from vosk_transcription.transcribe import record_turn
-from ai_correction.gemini_correct import ask_gemini
+from ai_correction.gemini_correct import ask_gemini_to_correct
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
-from validation import validate
-from analyse import analyse_dataset
+from validation.validation import validate
+# from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
 from datetime import datetime
 import pandas as pd
@@ -17,7 +17,7 @@ FINAL_FILE = "data/final_transcript.csv"
 def correct_with_fallback(text):
 
     try:
-        result = ask_gemini(text)
+        result = ask_gemini_to_correct(text)
         if result:
             return result
 
@@ -49,17 +49,20 @@ def main():
 
     try:
         while True:
-            speaker, phrase, time_taken_sec = record_turn(current_speaker)
-            
-            change = input("\nPress ENTER to continue or type new speaker name: ").strip()
-            current_speaker = change if change else speaker
-            
+            current_speaker, phrase, time_taken_sec = record_turn(current_speaker)
+
             all_data.append({
                 "timestamp": datetime.now().isoformat(),
                 "name": current_speaker,
                 "raw_text_vosk": phrase,
                 "time_taken_sec": time_taken_sec
             })
+
+
+            change = input("\nPress ENTER to continue or type new speaker name: ").strip()
+            current_speaker = change if change else current_speaker
+
+            
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")
@@ -104,9 +107,9 @@ def main():
         return
 
 
-    # ====== Stage 5: Analytics ======
-    print("\nRunning analytics...\n")
-    analyse_dataset(FINAL_FILE)
+    # # ====== Stage 5: Analytics ======
+    # print("\nRunning analytics...\n")
+    # analyse_dataset(FINAL_FILE)
 
 
 if __name__ == "__main__":

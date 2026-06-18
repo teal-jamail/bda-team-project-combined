@@ -50,7 +50,7 @@ def main():
     try:
         while True:
             current_speaker, phrase, time_taken_sec = record_turn(current_speaker)
-            if(not current_speaker):
+            if(current_speaker):
                 all_data.append({
                     "timestamp": datetime.now().isoformat(),
                     "name": current_speaker,

@@ -5,6 +5,8 @@ Hey all, here's the combined repo to share from single source.
 Let's work from this going forward (instead of original repos 
 [they have been preserved too])
 
+Note: see 02_merge_decision_log-tjb.md and 01_project-status-tjb.md for current findings and status. Assignments below are still accurate.
+
 --- 
 
 ## Setup
@@ -100,7 +102,7 @@ Read through documentation folder
 -- `code-walkthrough-tjb.md` 
 for full picture of how everything connects
 
-Review your portion `validation/__init__.py` 
+Write your portion `validation/__init__.py` 
 It checks six things:
 - at least 25 rows in the dataset
 - no missing values in required columns
@@ -108,8 +110,6 @@ It checks six things:
 - time_taken_sec, num_words, speech_rate_wps, speaker_turn_id
   are numeric and greater than zero
 - question_flag is True or False
-
-This is yours to explain in the video.
 
 **After the initial recording session**
 

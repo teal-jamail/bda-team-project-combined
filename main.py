@@ -63,8 +63,7 @@ def main():
 
             change = input("\nPress ENTER to continue or type new speaker name: ").strip()
             current_speaker = change if change else current_speaker
-
-            
+        
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")

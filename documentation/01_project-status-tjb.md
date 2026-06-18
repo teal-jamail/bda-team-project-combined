@@ -115,3 +115,5 @@ Decision needed: share files directly vs. temporarily committing real recorded d
 - Sergiu (diasergiu), Nita (itsNTM) and Ebou added as GitHub collaborators -  
 - Alina completed and submitted her validation work in group chat (referenced Nita's script plus her own additions; Nita reviewed it live and confirmed it looks good)
 - Ebou's enrichment work fully complete: enrich_dataset.py finishe complexity writeup shared with the team
+- Nita's restructure completed: speaker input logic moved from transcribe.py into main.py, improving separation of concerns
+- Nita: AI correction pipeline improved with clear fallback integration

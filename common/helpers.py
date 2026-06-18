@@ -11,7 +11,6 @@ def load_csv(filepath):
 def save_csv(df, filepath):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
-
-    df.to_csv(filepath, index=False, mode='w', header=False if os.path.exists(filepath) else True)
+    df.to_csv(filepath, index=False, header=True, mode='w')
    
     print(f"Saved: {filepath}")

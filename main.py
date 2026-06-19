@@ -12,12 +12,21 @@ RAW_FILE = "data/raw_transcript.csv"
 CORRECT_FILE = "data/correct_transcript.csv"
 FINAL_FILE = "data/final_transcript.csv"
 
+def get_initial_speaker():
+    while True:
+        name = input("Enter speaker name: ").strip()
+        if name:
+            return name
+        print("Speaker cannot be empty.")
+
 def recording_session():
     all_data = []
-    current_speaker = input("Enter speaker name: ").strip()
+    current_speaker = get_initial_speaker()
 
-    while not current_speaker:
-        current_speaker = input("Speaker cannot be empty. Enter name: ").strip()
+    # while not current_speaker:
+    #     current_speaker = input("Speaker cannot be empty. Enter name: ").strip()
+
+    print("\nRecording started. Press Ctrl+C to stop session.\n")
 
     try:
         while True:
@@ -76,6 +85,8 @@ def ai_correction(df):
         print(f"\n[{i}/{total_rows}] Correcting: {str(text)[:40]}...")
 
         corrected, source = correct_with_fallback(text)
+
+        time.sleep(1)
 
         texts.append(corrected)
 

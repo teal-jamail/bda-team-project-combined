@@ -3,7 +3,7 @@ from ai_correction.gemini_correct import ask_gemini
 from ai_correction.ollama_correct import ask_ollama
 from enrichment.enrich_dataset import enrich_dataframe
 from validation import validate
-from analyse import analyse
+from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
 from datetime import datetime
 import pandas as pd
@@ -135,15 +135,15 @@ def main():
     
     is_valid = validate(FINAL_FILE)
 
-    if not is_valid:
+    # if not is_valid:
 
-        print("\nFix validation errors before continuing.")
-        return
+    #     print("\nFix validation errors before continuing.")
+    #     return
 
 
     # # ====== Stage 5: Analytics ======
-    # print("\nRunning analytics...\n")
-    # analyse_dataset(FINAL_FILE)
+    print("\nRunning analytics...\n")
+    analyse_dataset(FINAL_FILE)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,208 @@ Output: a CSV with 25+ rows and a printed analytics report
 
 ## Proposed changes pending (some merged 18.06) ~~(not merged as of 06.17)~~
 
+### Nita Update 19/06
+```markdown
+
+**recording_session() — clean separation of concerns:**
+- Speaker input fully moved out of transcribe.py into main.py as proposed.
+- Empty name validation added — loop won't accept blank speaker name.
+- Append-before-input pattern correct — independently got the last-turn fix right.
+
+**ai_correction() — genuine upgrade over our version:**
+Replaces simple `.apply(correct_with_fallback)` with a proper loop that:
+- shows progress per row: [i/total_rows] Correcting: ...
+- tracks which model was used per row (gemini/ollama/raw)
+- returns source counts for a Stage 2 summary block:
+  Gemini used: 18, Ollama used: 4, Raw used: 3
+Worth keeping over what we had — adds transparency and is good for the demo video.
+
+**correct_with_fallback() — refactored as a model loop:**
+- Instead of nested try/except blocks, iterates over a list of (name, model) tuples
+- Cleaner and easier to extend if a third model gets added.
+- Now returns (corrected_text, source_name) instead of just corrected_text —
+this is what feeds source_count tracking in ai_correction()
+
+**transcribe.py — speaker input removed as planned:**
+- record_turn(current_speaker) — no default None, no input() prompt inside.
+- Speaker is always passed in from main.py
+- Returns (phrase, duration) instead of (current_speaker, phrase, duration).
+recognizer stays global for now
+- noted this to consider moving inside the function for state isolation btwn turns
+
+---
+
+### Issues to fix before merging
+
+**1 — wrong validation import (will crash immediately):**
+```python
+from validation.validation import validate  # Nita's branch
+from validation import validate             # correct — our validate() is in __init__.py
+```
+- import looks for validation/validation.py which exists on Sergiu's branch
+but not on main
+
+**2 — analytics commented out:**
+```python
+# from analyse import analyse_dataset
+# Stage 5 block fully commented out
+```
+analyse/__init__.py is now written and tested. Uncomment both the import and Stage 5
+before merging.
+
+**3 — return value mismatch between transcribe.py and main.py:**
+- transcribe.py returns (phrase, duration) — two values.
+- main.py correctly unpacks: phrase, time_taken_sec = record_turn(current_speaker)
+- if either file gets merged without the other, any caller still expecting
+(speaker, phrase, time_taken_sec) will crash with ValueError: not enough values to unpack.
+- merge as a unit, not separately.
+
+
+Don't merge transcribe.py without
+simultaneously merging main.py — the return value contract changed.
+```
+---
+
+## Sergiu's branch (origin/Sergiu) — reviewed, not safe to merge
+
+### What changed
+
+**transcribe.py:** essentially identical to main 
+— record_turn(current_speaker=None)
+w/ original three-value return (current_speaker, phrase, duration). 
+- No incremental CSV write logic 
+
+**validation/validation.py:** same file as already reviewed (Alina/Sergiu integration
+attempt). Same bugs documented above — sep="\t", 25-row check commented out,
+printAndAppendError index bug, no return True/False.
+
+**main.py:** one new critical bug introduced
+
+---
+
+### Critical bug — append condition inverted
+
+```python
+if(not current_speaker):
+    all_data.append({...})
+else:
+    print("No data recorded for this turn.")
+```
+
+`not current_speaker`:
+- evaluates True only when current_speaker is None or empty.
+- the code only appends when there is NO speaker name, and prints
+"No data recorded for this turn" when there IS one.
+
+- Every turn would be discarded. The pipeline would produce an empty
+dataset every single run w/o any obvious error message. 
+- serious invisible bug w/o actually running and checking the CSV output.
+
+---
+
+### Other issues (same as Nita's branch)
+
+- `from validation.validation import validate` — wrong import path, will crash
+- analytics import and Stage 5 both commented out
+- validation/validation.py has the same bugs documented in Alina's validation review
+  above — not safe to take from this branch
+
+
+Dont merge-inverted append condition alone makes this branch unsafe —
+it would produce empty datasets on every recording session.
+transcribe.py adds nothing over main. Validation bugs already documented.
+
+---
+
+## CombinedBranch (origin/CombinedBranch)
+
+### What improved over Sergiu's branch
+- Inverted append condition fixed: if(current_speaker): is now correct
+- 25-row check uncommented and active — only branch where this is restored
+
+### Still broken
+- sep="\t" still present — reads comma-separated files as tab-separated,
+  breaks column alignment immediately on real data
+- printAndAppendError index bug still present — indexError never updates
+  in the caller, every live print shows errors[0] repeated
+- no return True/False — is_valid always None, if not is_valid: always True,
+  analytics blocked on every run regardless of actual data quality
+- from validation.validation import validate — wrong import path, will crash
+- analytics still commented out
+- all_data.append() still after input() prompt — last-turn bug not fixed
+
+### transcribe.py
+Identical to Sergiu's branch and essentially our main version. Nothing new.
+
+Closer than Sergiu's branch but still has three blockers preventing the pipeline
+from running correctly. Do not merge.
+
+---
+
+## sergiu_with_main (origin/sergiu_with_main) 
+
+### What improved
+- all_data.append() moved before input() prompt — last-turn bug fixed
+
+### New bugs introduced
+- wrong import: from ai_correction.gemini_correct import ask_gemini_to_correct
+  our function is ask_gemini — crashes immediately on import with ImportError
+- "name": speaker in all_data.append() — speaker is undefined in this version,
+  the name variable is current_speaker — crashes with NameError on first turn
+- from validation.validation import validate — wrong import path
+- analytics still commented out
+
+
+Do not merge. Two new NameError/ImportError crashes introduced 
+- The last-turn fix is correct but the surrounding code breaks in two other places
+
+---
+
+## teal-jamail-patch-1 (origin/teal-jamail-patch-1) — cleanest branch, closest to main
+
+### What's there
+- from validation import validate — correct import path 
+- from analyse import analyse_dataset — correct import path 
+- from ai_correction.gemini_correct import ask_gemini — correct 
+- Stage 5 analytics fully restored and uncommented 
+- essentially our main.py with the broken imports fixed — looks like a GitHub
+  UI patch applied directly
+
+### Still has issues
+- all_data.append() still after input() prompt — last-turn bug present
+  (already fixed on main, not carried over here)
+- "name": current_speaker after the input update — if someone types a new
+  name at the prompt, the current turn gets recorded under the new speaker's
+  name rather than who just spoke (regression from the fix we applied to main)
+
+### Moving Ahead
+- All imports correct, analytics restored
+- main already has the last-turn fix that this branch doesn't
+Do not merge 
+— main is already more correct
+- Keep main as the base 
+- use Nita's ai_correction() upgrade when three issues fixed (wrong validation import, analytics commented out, return value mismatch between transcribe.py and main.py).
+
+---
+
+## Overall
+
+| Branch | Safe to merge | Key issue |
+|--------|--------------|-----------|
+| origin/nita | No — fix 3 issues first | Wrong validation import, analytics commented out, return value mismatch |
+| origin/Sergiu | No | Inverted append condition — silently discards all data |
+| origin/CombinedBranch | No | sep="\t", no return True/False, wrong import |
+| origin/sergiu_with_main | No | ask_gemini_to_correct and speaker NameError crashes |
+| origin/teal-jamail-patch-1 | No | Last-turn bug present, name regression |
+
+Recommended path: keep main as bas
+- Fix Nita's three issues on her branch,
+- merge only her transcribe.py and main.py as a unit. 
+Discard all other branches
+
+---
+
+
 ### Alina's validation.py + Sergiu's integration attempt
 
 Alina wrote a standalone validation script (AlinaM1994/bda-team-project,

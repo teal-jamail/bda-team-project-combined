@@ -9,10 +9,10 @@ def validate(Final_Result):
     indexError = 0
 
     #check at least 25 rows
-    # if len(df) < 25:
-    #     printAndAppendError(errors, indexError, f"Row count validation failed: {len(df)} rows found, at least 25 required")
-    # else:
-    #     print("Row count validation passed")
+    if len(df) < 25:
+        printAndAppendError(errors, indexError, f"Row count validation failed: {len(df)} rows found, at least 25 required")
+    else:
+        print("Row count validation passed")
 
     # Required values
     required_columns = [

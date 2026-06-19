@@ -10,69 +10,88 @@ Output: a CSV with 25+ rows and a printed analytics report
 
 ---
 
-## The five stages
 
-#### Stage 1: Record and transcribe (vosk_transcription/)
-Microphone casptures speech
-Vosk converts audio to raw text file offline - no internet needed
-Vosk is imperfect: no punctuation, mishears words, no capatalisation
+## Proposed changes pending (some merged 18.06) ~~(not merged as of 06.17)~~
 
-##### Output: data/raw_transcript.csv
+### Alina's validation.py + Sergiu's integration attempt
+
+Alina wrote a standalone validation script (AlinaM1994/bda-team-project,
+validation.py) — not yet a callable function, runs as a script on import.
+Uses vectorized timestamp check using pd.to_datetime(errors="coerce")
+with enumerate(start=2) to map back to correct row numbers.
+
+Bugs in her version:
+- hardcoded "data.csv" filename with sep="\t" - wrong file, wrong separator
+  (our pipeline writes comma-separated CSVs)
+- no function wrapper - can't be imported/called by main.py
+- row count check only prints, never appends to errors list - a <25 row
+  dataset could still report "Validation Passed"
+
+Sergiu attempted to integrate her version into his branch (teal-jamail/bda-team-project-combined, branch Sergiu, validation/validation.py).
+
+Improvements: wrapped in def validate(Final_Result), cleaner column-intersection line. But:
+- sep="\t" bug carried over unchanged - still breaks on real comma-separated data
+- 25-row check now commented out entirely - disabled, not just buggy
+(this is explcit project requirement)
+- new printAndAppendError() helper has a reference bug: indexError is passed by value -- never updates in the caller
+- -- every live print statement shows the first error repeated rather than the current one. 
+- Final summary block is unaffected since it loops over errors directly.
+- still no return True/False at the end - main.py's `if not is_valid:` would
+  always evaluate True regardless of actual validation outcome, blocking
+  every run unconditionally
+
+Status: not safe to merge as-is. Alina is continuing to update her version
+independently. Reconcile with whatever validate() currently exists in
+validation/__init__.py at the Thursday meeting - need to confirm that file's
+current state before comparing.
+
+### Teal - last-turn bug in main.py
+Fix: move all_data.append() to right after `record_turn()`, before `input()`
+- smaller fix than serg's incremental-write approach
+- doesnt change how the file gets written, protect in-memory list
+- commented and pushed to main
+
+- ~~the outer except KeyboardInterrupt only catches ctrl+C during `input()` prompt and not during record_turn() itself ["Press enter to continue or type new speaker name"]~~
+- ~~that has its own internal handler in transcribe.py and returns normally~~
+- ~~`all_data.appened()` currently after `input()`~~
+- ~~if Ctrl+C at that prompt to end session, execution jumps to except before append runs; so that turns data would drop~~
 
 ---
 
-#### Stage 2: AI correction (ai_correction/)
-Ea. raw vosk transcript sent to Gemini for correction
-Gemeni fixes spelling, add punctuation, keeps original meaning
-If Gemini fails, Ollama is tried as a fallback
-If both fail, the orgiginal raw text is kept unchanged
+### Sergiu's brach - incremental CSV writes + last-turn bug fix
+- found edge case: when KeyboardInterrupt stops the recording loop, the last speakers turn wasnt being appended to all_data before exit
+- checking against main.py/transcribe.py logic - may undercount rows
 
-##### Output: data/correction_transcript.csv
+- change Stage 1's CSV write from one save at the end to incremental appends per turn: mode=`a`, header=False if file exists else True.
 
----
+#### Tradeoff:
+- both versions O(n) - all_data built either way since correction/enrichment need full df anyway
+- currently: one to_csv() call, n rows written once - lower overhead
+- proposed version: n seperate to_csv() calls, one per turn = extra overhead
 
-#### Stage 3: Enrichment (enrichment/)
-Python calculates five new columns from corrected text
-No AI - pure calculation
-question_flag: does the text end with ?
-num_words: how many words
-text_size_chars: how many characters (w/ or w/o WS)
-speech_rate_wps: words divided by seconds
-speaker_turn_id: which turn number for speaker
+- open question: is all_data still built in memory, or do later stages now read incrementally from disk
 
-##### Output: data/final_transcript.csv
+Naming flag: import says `ask_gemini_to_correct`, currently `ask_gemini`
 
 ---
 
-#### Stage 4: Validation (validation/)
-Check final csv before analysis runs
-Min. 25 rows, no missing values, correct types, valid ranges
-Stops pipeline and prints errors if anything wrong
+### Nita's proposed restructure - speaker input ownership
 
----
+- transcriby.py should only handle audio recording + speech-to-text (Vosk)
+- should NOT handle speaker input
+- main.py should fully merge speaker input with speaker changes
 
-#### Stage 5: Analytics (analysis/)
-Answers six question about the meeting using pandas
-Who spoke most/least, total time, avg. time, most questions
-top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
+Contradicts current documentaiton: 
+- record_turn(current_speaker=None) prompts for speaker name when current_speaker is None
+- new version takes that out and moves all speaker logic to main.py
+- leaves transcribe.py as purely audio and Vosk
 
----
+How it improves:
+- Seperation-of-concerns - recording logic doesnt need to know about user input
 
-## Folder sturcture and why
-
-- vosk_transcription/ - Stage 1 
-- ai_correction/      - Stage 2
-- enrichment/         - Stage 3
-- validation/         - Stage 4
-- analysis/           - Stage 5
-- common/             - shared untilities (load.csv, save_csv)
-- data/               - csv file from pipline (gitignored)
-
-Reason for seperation: each stage has a job
-A bug in enrichment can't affect transcription
-Two peopl can work on different stages w/o git conflicts
-"Seperation of concerns"
-
+Status: Nita is now implementing this restructure directly rather than just
+proposing it. transcribe.py and main.py will both change once pushed - review
+needed at Thursday meeting before merging into main.
 ---
 
 ## What ea. person contributed
@@ -188,4 +207,67 @@ Ea. person 1 stage
 - correction crashes → still have raw recording
 - enrichment crashes → still have all 25 corrected rows
 
+---
 
+# The five stages
+
+#### Stage 1: Record and transcribe (vosk_transcription/)
+Microphone casptures speech
+Vosk converts audio to raw text file offline - no internet needed
+Vosk is imperfect: no punctuation, mishears words, no capatalisation
+
+##### Output: data/raw_transcript.csv
+
+---
+
+#### Stage 2: AI correction (ai_correction/)
+Ea. raw vosk transcript sent to Gemini for correction
+Gemeni fixes spelling, add punctuation, keeps original meaning
+If Gemini fails, Ollama is tried as a fallback
+If both fail, the orgiginal raw text is kept unchanged
+
+##### Output: data/correction_transcript.csv
+
+---
+
+#### Stage 3: Enrichment (enrichment/)
+Python calculates five new columns from corrected text
+No AI - pure calculation
+question_flag: does the text end with ?
+num_words: how many words
+text_size_chars: how many characters (w/ or w/o WS)
+speech_rate_wps: words divided by seconds
+speaker_turn_id: which turn number for speaker
+
+##### Output: data/final_transcript.csv
+
+---
+
+#### Stage 4: Validation (validation/)
+Check final csv before analysis runs
+Min. 25 rows, no missing values, correct types, valid ranges
+Stops pipeline and prints errors if anything wrong
+
+---
+
+#### Stage 5: Analytics (analysis/)
+Answers six question about the meeting using pandas
+Who spoke most/least, total time, avg. time, most questions
+top 5 speakers by time (+ # of tunrs?); avg. speech rate per speaker
+
+---
+
+## Folder sturcture and why
+
+- vosk_transcription/ - Stage 1 
+- ai_correction/      - Stage 2
+- enrichment/         - Stage 3
+- validation/         - Stage 4
+- analysis/           - Stage 5
+- common/             - shared untilities (load.csv, save_csv)
+- data/               - csv file from pipline (gitignored)
+
+Reason for seperation: each stage has a job
+A bug in enrichment can't affect transcription
+Two peopl can work on different stages w/o git conflicts
+"Seperation of concerns"

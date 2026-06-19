@@ -26,11 +26,10 @@ model = Model(MODEL_PATH)
 recognizer = KaldiRecognizer(model, SAMPLE_RATE)
 
 
-
-def record_turn(current_speaker=None):
+def record_turn(current_speaker):
     # 1st call crrent speaker is None b/c no one has spoken
-    if current_speaker is None:
-        current_speaker = input("Enter speaker name: ").strip()
+    # if current_speaker is None:
+    #     current_speaker = input("Enter speaker name: ").strip()
 
     print(f"\n[{current_speaker}] Start speaking. Press Ctrl+C when done.")
 
@@ -70,4 +69,5 @@ def record_turn(current_speaker=None):
 
     phrase = (full_text + final_raw_text).strip()
 
-    return current_speaker, phrase, duration
+    # return current_speaker, phrase, duration
+    return phrase, duration

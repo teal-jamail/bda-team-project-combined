@@ -31,3 +31,13 @@ Stage 4: validation.py
 - If validation fails, the program stops and asks to fix issues.
 
 Stage 5: analyse.py
+
+main.py
+- handles speaker input
+- controls recording loop
+- calls record_turn(current_speaker) from Vosk module
+- stores CSV data
+- runs AI correction with fallback logic
+- runs enrichment
+- runs validation
+- runs analytics

@@ -113,6 +113,8 @@ Keeps file I/O in one place - all stages use the same functions.
 - `os.makedirs`: creates folder if it doesn't exist
 - `exist_ok=True`: no error if folder already exists
 - `index=False`: suppresses Pandas row numbers from CSV output
+- `mode='a'`: Opens the file in append mode, adding data to the end rather than overwriting
+- `header=False if os.path.exists(filepath) else True`:  Prevents the column names from being written again if they aleardy exist
 - Time O(n): writes n rows to disk
 - Space O(1): no new memory allocated, dataframe already exists
 

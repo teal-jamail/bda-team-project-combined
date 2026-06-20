@@ -5,6 +5,7 @@ from enrichment.enrich_dataset import enrich_dataframe
 from validation import validate
 from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
+import time
 from datetime import datetime
 import pandas as pd
 
@@ -91,6 +92,7 @@ def ai_correction(df):
         source_count[source] += 1
 
         print(f"Source used: {source}")
+        time.sleep(13) # stay under 5 requests per min. [free tier limit]
 
     correct_df["text"] = texts
 
@@ -150,9 +152,9 @@ def main():
         return
 
 
-    # # ====== Stage 5: Analytics ======
-    # print("\nRunning analytics...\n")
-    # analyse_dataset(FINAL_FILE)
+    # ====== Stage 5: Analytics ======
+    print("\nRunning analytics...\n")
+    analyse_dataset(FINAL_FILE)
 
 
 if __name__ == "__main__":

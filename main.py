@@ -103,7 +103,7 @@ def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
 
     # ====== Stage 1: Record and transcribe ======
-    if os.pathexists(RAW_FILE):
+    if os.path.exists(RAW_FILE):
         # skip recording if raw csv already exists
         # protects overwrites
         # useful only for re-run correction or enrichment
@@ -123,8 +123,8 @@ def main():
         df = pd.DataFrame(all_data)
         # converts list of dicts to df - 1 dict per turn
 
-        save_csv(df, Raw_File)
-        print(f"\nStage 1 complete: {len(df)} rows saved to {Raw_File}")
+        save_csv(df, RAW_FILE)
+        print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
     
     # ====== Stage 1: Record and transcribe ======
 
@@ -142,12 +142,12 @@ def main():
 
    
    # ====== Stage 2: AI correction ======
-   if os.path.exists(CORRECT_FILE):
+    if os.path.exists(CORRECT_FILE):
     # skip correction if corrected csv already exists
     # avoids rerunning 25+ API calls unnecessarily
 
-    print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
-    correct_df = pd.read_csv(CORRECT_FILE)
+        print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
+        correct_df = pd.read_csv(CORRECT_FILE)
 
     else:
         print("\nStarting AI correction...\n")
@@ -165,12 +165,12 @@ def main():
 
     # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
 
-    print("\n============================== SUMMARY ==============================")
-    print(f"Processed rows: {total_rows}")
-    print(f"Gemini used: {source_count['gemini']}")
-    print(f"Ollama used: {source_count['ollama']}")
-    print(f"Raw used: {source_count['raw']}")
-    print("======================================================================\n")
+        print("\n============================== SUMMARY ==============================")
+        print(f"Processed rows: {total_rows}")
+        print(f"Gemini used: {source_count['gemini']}")
+        print(f"Ollama used: {source_count['ollama']}")
+        print(f"Raw used: {source_count['raw']}")
+        print("======================================================================\n")
 
     # ====== Stage 3: Enrichment ======
     if os.path.exists(FINAL_FILE):

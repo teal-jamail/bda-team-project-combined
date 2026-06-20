@@ -29,8 +29,17 @@ def recording_session():
                 "time_taken_sec": time_taken_sec
             })
             
-            change = input("Press ENTER or type new speaker name: ").strip()
+            # old prompt: change = input("Press ENTER or type new speaker name: ").strip()
+            # replaced with explicit 'done' exit to avoid Ctrl+C ambiguity
+            change = input("Press ENTER for same speaker, type name to switch, or type 'done' to finish: ").strip()
+            
+            if change.lower() == "done": # change lowercase so all dunctions same
+                break                    # exits the `while ture` loop
+                
             current_speaker = change or current_speaker
+            # only runs when `done` is not types 
+            # if new user name input `current_speaker` becomes new name (T)
+            # if press enter change is empty str (F)
 
     except KeyboardInterrupt:
         print("\nRecording stopped.")
@@ -135,10 +144,10 @@ def main():
     
     is_valid = validate(FINAL_FILE)
 
-    # if not is_valid:
+    if not is_valid:
 
-    #     print("\nFix validation errors before continuing.")
-    #     return
+        print("\nFix validation errors before continuing.")
+        return
 
 
     # # ====== Stage 5: Analytics ======

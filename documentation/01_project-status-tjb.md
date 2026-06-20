@@ -35,6 +35,9 @@
 - individual peer evaluation forms submitted on Moodle (everyone)
 - AI declaration on Moodle (everyone — not due Monday, flag for later)
 
+### In progress
+- fix-pipeline-skip-stages PR open — skip stages if output CSV exists
+
 ~~## Thurs. discussion - quick reference~~
 - - filename check: what main.py actually writes (correct_transcript.csv vscorrection_transcription.csv) - docs diff
 - merge strategy agreed: Sergiu merging all branches into a separate integration branch first, main stays protected

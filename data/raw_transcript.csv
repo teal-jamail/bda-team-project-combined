@@ -1,5 +1,4 @@
 timestamp,name,raw_text_vosk,time_taken_sec
-<<<<<<< HEAD
 2026-06-19T11:57:44.248875,Sergiu,transcript the jimmy nice so that the it's a good at it,8.15
 2026-06-19T11:58:00.765476,Alina,the can we now still have questions the,13.1
 2026-06-19T14:34:04.267148,Sergiu,what is the best course of action to continue,7.13
@@ -12,7 +11,6 @@ timestamp,name,raw_text_vosk,time_taken_sec
 2026-06-19T17:41:08.413511,Sergiu,what that are you doing today,7.71
 2026-06-19T17:48:36.727958,Alina,what's the point the form of these,6.12
 2026-06-19T19:48:40.042335,Sergiu,interesting this one your input the,12.06
-=======
 2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64
 2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13
 2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15
@@ -39,4 +37,3 @@ timestamp,name,raw_text_vosk,time_taken_sec
 2026-06-18T16:24:04.241363,Sergiu,perfect but it's upload the project on github,7.62
 2026-06-18T16:24:17.216913,Ebou,i check that to the after the upload,6.11
 2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1
->>>>>>> 4896b702e68121b94f436126bdca2f4d4774c749

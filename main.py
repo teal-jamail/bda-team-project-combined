@@ -9,10 +9,12 @@ import time
 import os
 from datetime import datetime
 import pandas as pd
+import json
 
 RAW_FILE = "data/raw_transcript.csv"
 CORRECT_FILE = "data/correct_transcript.csv"
 FINAL_FILE = "data/final_transcript.csv"
+SUMMARY_FILE = "data/summary.json"
 
 def recording_session():
     all_data = []
@@ -99,6 +101,18 @@ def ai_correction(df):
 
     return correct_df, total_rows, source_count
 
+def save_summary(total_rows, source_count):
+
+    summary = {
+        "total_rows": total_rows,
+        "gemini_used": source_count["gemini"],
+        "ollama_used": source_count["ollama"],
+        "raw_used": source_count["raw"]
+    }
+
+    with open(SUMMARY_FILE, "w") as f:
+        json.dump(summary, f, indent=4)
+
 def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
 
@@ -157,12 +171,27 @@ def main():
         correct_df = pd.read_csv(CORRECT_FILE)
         total_rows = len(correct_df)
 
+        if os.path.exists(SUMMARY_FILE):
+            with open(SUMMARY_FILE, "r") as f:
+                summary = json.load(f)
+
+            total_rows = summary["total_rows"]
+            source_count = {
+                "gemini": summary.get("gemini_used", 0),
+                "ollama": summary.get("ollama_used", 0),
+                "raw": summary.get("raw_used", 0)
+            }
+
+        else:
+            total_rows = len(correct_df)
+            source_count = {"gemini": 0, "ollama": 0, "raw": 0}
+
     else:
         print("\nStarting AI correction...\n")
         correct_df, total_rows, source_count = ai_correction(df)
         save_csv(correct_df, CORRECT_FILE)
         print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
-   
+        save_summary(total_rows, source_count)
 
     # ====== Stage 2: AI correction ======
     # print("\nStarting AI correction...\n")

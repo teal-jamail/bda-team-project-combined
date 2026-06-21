@@ -164,6 +164,12 @@ def main():
    
    # ====== Stage 2: AI correction ======
     if os.path.exists(CORRECT_FILE):
+<<<<<<< HEAD
+        # skip correction if corrected csv already exists
+        # avoids rerunning 25+ API calls unnecessarily
+        print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
+        correct_df = pd.read_csv(CORRECT_FILE)
+=======
     # skip correction if corrected csv already exists
     # avoids rerunning 25+ API calls unnecessarily
 
@@ -186,6 +192,7 @@ def main():
             total_rows = len(correct_df)
             source_count = {"gemini": 0, "ollama": 0, "raw": 0}
 
+>>>>>>> 62f49f54e655f54b92cf99aa74222884e60ce852
     else:
         print("\nStarting AI correction...\n")
         correct_df, total_rows, source_count = ai_correction(df)
@@ -202,12 +209,13 @@ def main():
 
     # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
 
-    print("\n============================== SUMMARY ==============================")
-    print(f"Processed rows: {total_rows}")
-    print(f"Gemini used: {source_count['gemini']}")
-    print(f"Ollama used: {source_count['ollama']}")
-    print(f"Raw used: {source_count['raw']}")
-    print("======================================================================\n")
+    if 'source_count' in locals():
+        print("\n============================== SUMMARY ==============================")
+        print(f"Processed rows: {total_rows}")
+        print(f"Gemini used: {source_count['gemini']}")
+        print(f"Ollama used: {source_count['ollama']}")
+        print(f"Raw used: {source_count['raw']}")
+        print("======================================================================\n")
 
     # ====== Stage 3: Enrichment ======
     if os.path.exists(FINAL_FILE):

@@ -1,39 +1,26 @@
 timestamp,name,raw_text_vosk,time_taken_sec,text
-2026-06-19T11:57:44.248875,Sergiu,transcript the jimmy nice so that the it's a good at it,8.15,The Jimmy Nice show is so that it’s a good fit.
-2026-06-19T11:58:00.765476,Alina,the can we now still have questions the,13.1,Can we now still have questions?
-2026-06-19T14:34:04.267148,Sergiu,what is the best course of action to continue,7.13,What is the best course of action to continue?
-2026-06-19T14:34:58.118464,Sergiu,the are we there yet the,12.63,Are we there yet?
-2026-06-19T14:40:41.339989,Alina,so what are we gonna do now that's when almost finished,8.13,"So, what are we going to do now? That’s when we were almost finished."
-2026-06-19T14:43:27.684947,Nita,did you work the project recently,7.63,Did you work on the project recently?
-2026-06-19T15:14:01.444826,Sergiu,the assuming the award of now,6.16,The assumption of the award is now.
-2026-06-19T15:26:54.771975,Sergiu,what should they doing this morning,5.63,What should they be doing this morning?
-2026-06-19T15:30:39.332360,Maria,the how have you been today the,9.65,How have you been today?
-2026-06-19T17:41:08.413511,Sergiu,what that are you doing today,7.71,What are you doing today?
-2026-06-19T17:48:36.727958,Alina,what's the point the form of these,6.12,What is the point of this form?
-2026-06-19T19:48:40.042335,Sergiu,interesting this one your input the,12.06,This is one of the most interesting inputs you provided.
-2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64,"Good morning, everyone. Shall we start the meeting?"
-2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13,"Yes, let's begin with discussing the data validation task."
-2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15,Or checked the CSV files and found a few missing values.
-2026-06-18T16:13:22.150932,Nita,where there any issues with a call them names,5.61,Were there any issues with calling them names?
-2026-06-18T16:13:46.846359,Teal,no the column names little correct,6.12,"No, the column names are a little correct."
-2026-06-18T16:14:04.859515,Ebou,come your rules i didn't the dataset,6.63,I didn't understand your rules because I didn't have the dataset.
-2026-06-18T16:14:21.575754,Alina,the thirty in total,8.12,Thirty in total.
-2026-06-18T16:14:37.778040,Sergiu,is anyone to find it doping cases redcoats,8.13,Is anyone to find it in doping case records?
-2026-06-18T16:14:58.381983,Nita,i checked and found one duplicated zero,5.62,I checked and found one duplicated zero.
-2026-06-18T16:15:23.415133,Ebou,should remove it before the analysis,6.64,Should remove it before the analysis.
-2026-06-18T16:15:41.250524,Teal,the agree i can update the dataset,7.13,I agree; I can update the dataset.
-2026-06-18T16:16:11.896179,Alina,what about missing values,7.12,What about missing values?
-2026-06-18T16:20:50.237201,Teal,yeah to missing entities in the year to call them,7.14,"Yeah, to address missing entities in the year, to call them."
-2026-06-18T16:21:08.422683,Sergiu,can be sued them using ai,5.12,Can be sued them using AI.
-2026-06-18T16:21:25.907883,Alina,yes we can use jimmy and i suggest the missing years,7.13,"Yes, we can use Jimmy, and I suggest the missing years."
-2026-06-18T16:21:41.925091,Ebou,the that sounds like a good approach,6.12,That sounds like a good approach.
-2026-06-18T16:21:57.184980,Nita,the only addition can you run successfully,6.13,The only addition you can run successfully.
-2026-06-18T16:22:13.727569,Alina,yes the tracks people around without any adults,6.64,"Yes, the tracks are people around without any adults."
-2026-06-18T16:22:46.816522,Sergiu,the great does anyone that the view the results,6.13,The great does anyone that they view the results.
-2026-06-18T16:23:01.182593,Teal,haiti viewed them and everything looks fine,6.12,Haiti viewed them and everything looks fine.
-2026-06-18T16:23:19.609159,Ebou,i view that might as well,11.13,I view that might as well.
-2026-06-18T16:23:31.454679,abbreviation Nita,same here,8.1,Same here.
-2026-06-18T16:23:47.740135,Alina,then they can see the clean the does it,6.64,"Then they can see, clean it does it."
-2026-06-18T16:24:04.241363,Sergiu,perfect but it's upload the project on github,7.62,"Perfect, but it’s upload the project on GitHub."
-2026-06-18T16:24:17.216913,Ebou,i check that to the after the upload,6.11,I check to the after the upload.
-2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1,Thank you everyone for the good work today.
+2026-06-21T10:50:43.679736,Nita,michigan control this is commander nita calling from orbit do you copy,9.5,"Michigan Control, this is Commander Nita calling from orbit. Do you copy?"
+2026-06-21T10:50:57.459732,Teal,we copy you commander what is your status,7.29,"We copy you, Commander. What is your status?"
+2026-06-21T10:51:11.182608,Serg,all systems are nominal fuel levels are looking good,8.45,All systems are nominal. Fuel levels are looking good.
+2026-06-21T10:51:27.114602,Ebou,the life support is stable oxygen levels are within normal range,8.47,The life support is stable. Oxygen levels are within normal range.
+2026-06-21T10:51:40.126164,Alina,the navigation is locked on course no deviation detected,9.16,The navigation is locked on course. No deviation detected.
+2026-06-21T10:51:50.222681,Nita,good we are proteins the debris field as planned,7.22,"Good, we are proteins in the debris field as planned."
+2026-06-21T10:52:08.288961,Teal,commander shouldn't we reduce speed before we enter the field,7.66,"Commander, shouldn't we reduce speed before we enter the field?"
+2026-06-21T10:52:21.243689,Nita,affirmative reducing to forty percent thrust now,7.66,"Affirmative, reducing to 40% thrust now."
+2026-06-21T10:52:36.462710,Serg,i am tracking twelve objects on the radar none are on collision court,9.88,I am tracking twelve objects on the radar; none are on a collision course.
+2026-06-21T10:52:50.248098,Ebou,thermal readings are elevated on the port died should i investigate,10.21,Thermal readings are elevated on the port side. Should I investigate?
+2026-06-21T10:53:02.639463,Nita,yes run a full diagnostic on port system,9.3,"Yes, run a full diagnostic on the port system."
+2026-06-21T10:53:19.117350,Teal,i am picking up an anomalous signal on frequency seven,8.28,I am picking up an anomalous signal on frequency seven.
+2026-06-21T10:53:28.526972,Nita,can you identify the source,7.24,Can you identify the source?
+2026-06-21T10:54:08.744673,Ebou,it could be the beacon from the last probe we've launched,11.94,It could be the beacon from the last probe we've launched.
+2026-06-21T10:54:25.297407,Alina,the coordinator matt he may be right,9.01,"The coordinator, Matt, may be right."
+2026-06-21T10:54:48.900306,Nita,peel lock onto that signal do not lose it,11.69,"Peel, lock onto that signal. Do not lose it."
+2026-06-21T10:55:03.948944,Teal,lots on commander it is definitely the probe,7.43,"Lots on Commander, it is definitely the probe."
+2026-06-21T10:55:38.191416,Nita,prepare the retrieval arm,18.53,Prepare the retrieval arm.
+2026-06-21T10:55:51.025841,Serg,the retrieve the alarm is ready and on standby,7.56,The alarm is ready and on standby.
+2026-06-21T10:56:04.152043,Alina,i am alerting mission control before we attempt to retrieval,7.16,I am alerting Mission Control before we attempt to retrieve.
+2026-06-21T10:56:25.879744,Ebou,the thinking sending transmission now,7.7,The thinking sending transmission now.
+2026-06-21T10:56:44.627110,Alina,mission control is responding they're giving us the green light,8.38,Mission control is responding. They're giving us the green light.
+2026-06-21T10:56:57.503181,Serg,initiating retrieval sequence now,6.84,Initiating retrieval sequence now.
+2026-06-21T10:57:09.561606,Ebou,all readings are stable this will work,7.04,All readings are stable; this will work.
+2026-06-21T10:57:21.822918,Nita,probe secured mission accomplished good work everyone,8.8,"Probe secured. Mission accomplished. Good work, everyone."

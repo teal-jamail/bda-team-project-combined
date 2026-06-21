@@ -1,27 +1,27 @@
 timestamp,name,raw_text_vosk,time_taken_sec,text
-2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64,"Good morning, everyone. Shall we start the meeting?"
-2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13,"Yes, let's begin with discussing the data validation task."
-2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15,Or checked the CSV files and found a few missing values.
-2026-06-18T16:13:22.150932,Nita,where there any issues with a call them names,5.61,Were there any issues with calling them names?
-2026-06-18T16:13:46.846359,Teal,no the column names little correct,6.12,"No, the column names are a little correct."
-2026-06-18T16:14:04.859515,Ebou,come your rules i didn't the dataset,6.63,I didn't understand your rules because I didn't have the dataset.
-2026-06-18T16:14:21.575754,Alina,the thirty in total,8.12,Thirty in total.
-2026-06-18T16:14:37.778040,Sergiu,is anyone to find it doping cases redcoats,8.13,Is anyone to find it in doping case records?
+2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64,"Good morning, everyone. I shall we start of the meeting."
+2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13,"Yes, let’s begin. We need to discuss the data validation task."
+2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15,"Or, I checked the CSV files and found a few missing values."
+2026-06-18T16:13:22.150932,Nita,where there any issues with a call them names,5.61,"Were there any issues with a call, them names?"
+2026-06-18T16:13:46.846359,Teal,no the column names little correct,6.12,"No, the column names look little correct."
+2026-06-18T16:14:04.859515,Ebou,come your rules i didn't the dataset,6.63,"Come, follow your rules; I didn’t use the dataset."
+2026-06-18T16:14:21.575754,Alina,the thirty in total,8.12,The thirty in total.
+2026-06-18T16:14:37.778040,Sergiu,is anyone to find it doping cases redcoats,8.13,"Is anyone to find it? Doping cases, redcoats."
 2026-06-18T16:14:58.381983,Nita,i checked and found one duplicated zero,5.62,I checked and found one duplicated zero.
-2026-06-18T16:15:23.415133,Ebou,should remove it before the analysis,6.64,It should be removed before the analysis.
-2026-06-18T16:15:41.250524,Teal,the agree i can update the dataset,7.13,"I agree, I can update the dataset."
+2026-06-18T16:15:23.415133,Ebou,should remove it before the analysis,6.64,Should remove it before the analysis.
+2026-06-18T16:15:41.250524,Teal,the agree i can update the dataset,7.13,I agree; I can update the dataset.
 2026-06-18T16:16:11.896179,Alina,what about missing values,7.12,What about missing values?
-2026-06-18T16:20:50.237201,Teal,yeah to missing entities in the year to call them,7.14,"Yeah, too many missing entities in the year to call them."
-2026-06-18T16:21:08.422683,Sergiu,can be sued them using ai,5.12,Can they be sued using AI?
-2026-06-18T16:21:25.907883,Alina,yes we can use jimmy and i suggest the missing years,7.13,"Yes, we can use Jimmy, and I suggest The Missing Years."
+2026-06-18T16:20:50.237201,Teal,yeah to missing entities in the year to call them,7.14,"Yeah, to address missing entities in the year, to call them."
+2026-06-18T16:21:08.422683,Sergiu,can be sued them using ai,5.12,Can be sued them using AI.
+2026-06-18T16:21:25.907883,Alina,yes we can use jimmy and i suggest the missing years,7.13,"Yes, we can use Jimmy, and I suggest the missing years."
 2026-06-18T16:21:41.925091,Ebou,the that sounds like a good approach,6.12,That sounds like a good approach.
-2026-06-18T16:21:57.184980,Nita,the only addition can you run successfully,6.13,"The only addition, can you run successfully?"
-2026-06-18T16:22:13.727569,Alina,yes the tracks people around without any adults,6.64,"Yes, it tracks people around without any adults."
-2026-06-18T16:22:46.816522,Sergiu,the great does anyone that the view the results,6.13,Does anyone view the great results?
-2026-06-18T16:23:01.182593,Teal,haiti viewed them and everything looks fine,6.12,"Haiti viewed them, and everything looks fine."
+2026-06-18T16:21:57.184980,Nita,the only addition can you run successfully,6.13,The only addition you can run successfully.
+2026-06-18T16:22:13.727569,Alina,yes the tracks people around without any adults,6.64,"Yes, the tracks are people around without any adults."
+2026-06-18T16:22:46.816522,Sergiu,the great does anyone that the view the results,6.13,The great does anyone that they view the results.
+2026-06-18T16:23:01.182593,Teal,haiti viewed them and everything looks fine,6.12,Haiti viewed them and everything looks fine.
 2026-06-18T16:23:19.609159,Ebou,i view that might as well,11.13,I view that might as well.
 2026-06-18T16:23:31.454679,abbreviation Nita,same here,8.1,Same here.
-2026-06-18T16:23:47.740135,Alina,then they can see the clean the does it,6.64,Then they can see how it cleans.
+2026-06-18T16:23:47.740135,Alina,then they can see the clean the does it,6.64,"Then they can see, clean it does it."
 2026-06-18T16:24:04.241363,Sergiu,perfect but it's upload the project on github,7.62,"Perfect, but it’s upload the project on GitHub."
 2026-06-18T16:24:17.216913,Ebou,i check that to the after the upload,6.11,I check to the after the upload.
-2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1,"Thanks, everyone, for the good work today."
+2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1,Thank you everyone for the good work today.

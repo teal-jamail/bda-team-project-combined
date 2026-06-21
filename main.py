@@ -102,6 +102,13 @@ def ai_correction(df):
 def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
 
+    total_rows = 0
+    source_count = {
+        "gemini": 0,
+        "ollama": 0,
+        "raw": 0
+    }
+
     # ====== Stage 1: Record and transcribe ======
     if os.path.exists(RAW_FILE):
         # skip recording if raw csv already exists
@@ -148,6 +155,7 @@ def main():
 
         print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
         correct_df = pd.read_csv(CORRECT_FILE)
+        total_rows = len(correct_df)
 
     else:
         print("\nStarting AI correction...\n")
@@ -204,11 +212,7 @@ def main():
         return
 
 
-<<<<<<< HEAD
     # # ====== Stage 5: Analytics ======
-=======
-    # ====== Stage 5: Analytics ======
->>>>>>> 4896b702e68121b94f436126bdca2f4d4774c749
     print("\nRunning analytics...\n")
     analyse_dataset(FINAL_FILE)
 

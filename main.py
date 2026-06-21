@@ -204,7 +204,11 @@ def main():
         return
 
 
+<<<<<<< HEAD
+    # # ====== Stage 5: Analytics ======
+=======
     # ====== Stage 5: Analytics ======
+>>>>>>> 4896b702e68121b94f436126bdca2f4d4774c749
     print("\nRunning analytics...\n")
     analyse_dataset(FINAL_FILE)
 

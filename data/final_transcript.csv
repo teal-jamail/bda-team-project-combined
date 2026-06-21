@@ -1,4 +1,18 @@
 timestamp,name,raw_text_vosk,time_taken_sec,text,question_flag,num_words,text_size_chars,speech_rate_wps,speaker_turn_id
+<<<<<<< HEAD
+2026-06-19T11:57:44.248875,Sergiu,transcript the jimmy nice so that the it's a good at it,8.15,The Jimmy Nice show is so that it’s a good fit.,False,11,47,1.35,1
+2026-06-19T11:58:00.765476,Alina,the can we now still have questions the,13.1,Can we now still have questions?,True,6,32,0.46,1
+2026-06-19T14:34:04.267148,Sergiu,what is the best course of action to continue,7.13,What is the best course of action to continue?,True,9,46,1.26,1
+2026-06-19T14:34:58.118464,Sergiu,the are we there yet the,12.63,Are we there yet?,True,4,17,0.32,1
+2026-06-19T14:40:41.339989,Alina,so what are we gonna do now that's when almost finished,8.13,"So, what are we going to do now? That’s when we were almost finished.",False,14,69,1.72,1
+2026-06-19T14:43:27.684947,Nita,did you work the project recently,7.63,Did you work on the project recently?,True,7,37,0.92,1
+2026-06-19T15:14:01.444826,Sergiu,the assuming the award of now,6.16,The assumption of the award is now.,False,7,35,1.14,1
+2026-06-19T15:26:54.771975,Sergiu,what should they doing this morning,5.63,What should they be doing this morning?,True,7,39,1.24,1
+2026-06-19T15:30:39.332360,Maria,the how have you been today the,9.65,How have you been today?,True,5,24,0.52,1
+2026-06-19T17:41:08.413511,Sergiu,what that are you doing today,7.71,What are you doing today?,True,5,25,0.65,1
+2026-06-19T17:48:36.727958,Alina,what's the point the form of these,6.12,What is the point of this form?,True,7,31,1.14,1
+2026-06-19T19:48:40.042335,Sergiu,interesting this one your input the,12.06,This is one of the most interesting inputs you provided.,False,10,56,0.83,1
+=======
 2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64,"Good morning, everyone. Shall we start the meeting?",True,8,51,1.05,1
 2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13,"Yes, let's begin with discussing the data validation task.",False,9,58,0.99,1
 2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15,Or checked the CSV files and found a few missing values.,False,11,56,2.14,1
@@ -25,3 +39,4 @@ timestamp,name,raw_text_vosk,time_taken_sec,text,question_flag,num_words,text_si
 2026-06-18T16:24:04.241363,Sergiu,perfect but it's upload the project on github,7.62,"Perfect, but it’s upload the project on GitHub.",False,8,47,1.05,5
 2026-06-18T16:24:17.216913,Ebou,i check that to the after the upload,6.11,I check to the after the upload.,False,7,32,1.15,5
 2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1,"Thanks, everyone, for the good work today.",False,7,42,1.37,7
+>>>>>>> 4896b702e68121b94f436126bdca2f4d4774c749

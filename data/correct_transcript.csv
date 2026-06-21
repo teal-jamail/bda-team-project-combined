@@ -1,4 +1,18 @@
 timestamp,name,raw_text_vosk,time_taken_sec,text
+<<<<<<< HEAD
+2026-06-19T11:57:44.248875,Sergiu,transcript the jimmy nice so that the it's a good at it,8.15,The Jimmy Nice show is so that it’s a good fit.
+2026-06-19T11:58:00.765476,Alina,the can we now still have questions the,13.1,Can we now still have questions?
+2026-06-19T14:34:04.267148,Sergiu,what is the best course of action to continue,7.13,What is the best course of action to continue?
+2026-06-19T14:34:58.118464,Sergiu,the are we there yet the,12.63,Are we there yet?
+2026-06-19T14:40:41.339989,Alina,so what are we gonna do now that's when almost finished,8.13,"So, what are we going to do now? That’s when we were almost finished."
+2026-06-19T14:43:27.684947,Nita,did you work the project recently,7.63,Did you work on the project recently?
+2026-06-19T15:14:01.444826,Sergiu,the assuming the award of now,6.16,The assumption of the award is now.
+2026-06-19T15:26:54.771975,Sergiu,what should they doing this morning,5.63,What should they be doing this morning?
+2026-06-19T15:30:39.332360,Maria,the how have you been today the,9.65,How have you been today?
+2026-06-19T17:41:08.413511,Sergiu,what that are you doing today,7.71,What are you doing today?
+2026-06-19T17:48:36.727958,Alina,what's the point the form of these,6.12,What is the point of this form?
+2026-06-19T19:48:40.042335,Sergiu,interesting this one your input the,12.06,This is one of the most interesting inputs you provided.
+=======
 2026-06-18T16:12:35.989139,Sergiu,good morning everyone i shall we start of the meeting,7.64,"Good morning, everyone. Shall we start the meeting?"
 2026-06-18T16:12:54.867187,Alina,yes let's begin with we need to discuss the data validation task,9.13,"Yes, let's begin with discussing the data validation task."
 2026-06-18T16:13:08.947553,Teal,or checked the csv files and found a few missing values,5.15,Or checked the CSV files and found a few missing values.
@@ -25,3 +39,4 @@ timestamp,name,raw_text_vosk,time_taken_sec,text
 2026-06-18T16:24:04.241363,Sergiu,perfect but it's upload the project on github,7.62,"Perfect, but it’s upload the project on GitHub."
 2026-06-18T16:24:17.216913,Ebou,i check that to the after the upload,6.11,I check to the after the upload.
 2026-06-18T16:24:26.392177,Alina,thanks everyone in the good work today,5.1,"Thanks, everyone, for the good work today."
+>>>>>>> 4896b702e68121b94f436126bdca2f4d4774c749

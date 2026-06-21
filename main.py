@@ -9,10 +9,12 @@ import time
 import os
 from datetime import datetime
 import pandas as pd
+import json
 
 RAW_FILE = "data/raw_transcript.csv"
 CORRECT_FILE = "data/correct_transcript.csv"
 FINAL_FILE = "data/final_transcript.csv"
+SUMMARY_FILE = "data/summary.json"
 
 def recording_session():
     all_data = []
@@ -93,14 +95,33 @@ def ai_correction(df):
         source_count[source] += 1
 
         print(f"Source used: {source}")
-        time.sleep(13) # stay under 5 requests per min. [free tier limit]
+        # time.sleep(13) # stay under 5 requests per min. [free tier limit]
 
     correct_df["text"] = texts
 
     return correct_df, total_rows, source_count
 
+def save_summary(total_rows, source_count):
+
+    summary = {
+        "total_rows": total_rows,
+        "gemini_used": source_count["gemini"],
+        "ollama_used": source_count["ollama"],
+        "raw_used": source_count["raw"]
+    }
+
+    with open(SUMMARY_FILE, "w") as f:
+        json.dump(summary, f, indent=4)
+
 def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
+
+    total_rows = 0
+    source_count = {
+        "gemini": 0,
+        "ollama": 0,
+        "raw": 0
+    }
 
     # ====== Stage 1: Record and transcribe ======
     if os.path.exists(RAW_FILE):
@@ -143,16 +164,41 @@ def main():
    
    # ====== Stage 2: AI correction ======
     if os.path.exists(CORRECT_FILE):
+<<<<<<< HEAD
         # skip correction if corrected csv already exists
         # avoids rerunning 25+ API calls unnecessarily
         print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
         correct_df = pd.read_csv(CORRECT_FILE)
+=======
+    # skip correction if corrected csv already exists
+    # avoids rerunning 25+ API calls unnecessarily
+
+        print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
+        correct_df = pd.read_csv(CORRECT_FILE)
+        total_rows = len(correct_df)
+
+        if os.path.exists(SUMMARY_FILE):
+            with open(SUMMARY_FILE, "r") as f:
+                summary = json.load(f)
+
+            total_rows = summary["total_rows"]
+            source_count = {
+                "gemini": summary.get("gemini_used", 0),
+                "ollama": summary.get("ollama_used", 0),
+                "raw": summary.get("raw_used", 0)
+            }
+
+        else:
+            total_rows = len(correct_df)
+            source_count = {"gemini": 0, "ollama": 0, "raw": 0}
+
+>>>>>>> 62f49f54e655f54b92cf99aa74222884e60ce852
     else:
         print("\nStarting AI correction...\n")
         correct_df, total_rows, source_count = ai_correction(df)
         save_csv(correct_df, CORRECT_FILE)
         print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
-   
+        save_summary(total_rows, source_count)
 
     # ====== Stage 2: AI correction ======
     # print("\nStarting AI correction...\n")
@@ -203,7 +249,7 @@ def main():
         return
 
 
-    # ====== Stage 5: Analytics ======
+    # # ====== Stage 5: Analytics ======
     print("\nRunning analytics...\n")
     analyse_dataset(FINAL_FILE)
 

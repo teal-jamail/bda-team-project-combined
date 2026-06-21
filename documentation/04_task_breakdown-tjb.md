@@ -21,7 +21,8 @@ Settup gemini and ollama
 ```
 * don't push 'venve/ folder to github or api keys
 
-
+in order to run the tests run:
+pip install pytest
 --- ## SERGIU ---
 
 Your recording code is in 'vosk_transcription/transcribe.py`

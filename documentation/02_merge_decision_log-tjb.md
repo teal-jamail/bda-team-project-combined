@@ -71,16 +71,14 @@ recognizer stays global for now
 ### Issues to fix before merging
 
 **1 — wrong validation import (will crash immediately):**
-Line 5:
 ```python
 from validation.validation import validate  # Nita's branch
 from validation import validate             # correct — our validate() is in __init__.py
 ```
-- Line 6: import looks for validation/validation.py which exists on Sergiu's branch
+- import looks for validation/validation.py which exists on Sergiu's branch
 but not on main
 
 **2 — analytics commented out:**
-Lines 6 & 146 main.py
 ```python
 # from analyse import analyse_dataset
 # Stage 5 block fully commented out
@@ -89,7 +87,6 @@ analyse/__init__.py is now written and tested. Uncomment both the import and Sta
 before merging.
 
 **3 — return value mismatch between transcribe.py and main.py:**
-Line 72-73
 - transcribe.py returns (phrase, duration) — two values.
 - main.py correctly unpacks: phrase, time_taken_sec = record_turn(current_speaker)
 - if either file gets merged without the other, any caller still expecting
@@ -100,13 +97,61 @@ Line 72-73
 Don't merge transcribe.py without
 simultaneously merging main.py — the return value contract changed.
 ```
+---
+
+## Sergiu's branch (origin/Sergiu) — reviewed, not safe to merge
+
+### What changed
+
+**transcribe.py:** essentially identical to main 
+— record_turn(current_speaker=None)
+w/ original three-value return (current_speaker, phrase, duration). 
+- No incremental CSV write logic 
+
+**validation/validation.py:** same file as already reviewed (Alina/Sergiu integration
+attempt). Same bugs documented above — sep="\t", 25-row check commented out,
+printAndAppendError index bug, no return True/False.
+
+**main.py:** one new critical bug introduced
+
+---
+
+### Critical bug — append condition inverted
+
+```python
+if(not current_speaker):
+    all_data.append({...})
+else:
+    print("No data recorded for this turn.")
+```
+
+`not current_speaker`:
+- evaluates True only when current_speaker is None or empty.
+- the code only appends when there is NO speaker name, and prints
+"No data recorded for this turn" when there IS one.
+
+- Every turn would be discarded. The pipeline would produce an empty
+dataset every single run w/o any obvious error message. 
+- serious invisible bug w/o actually running and checking the CSV output.
+
+---
+
+### Other issues (same as Nita's branch)
+
+- `from validation.validation import validate` — wrong import path, will crash
+- analytics import and Stage 5 both commented out
+- validation/validation.py has the same bugs documented in Alina's validation review
+  above — not safe to take from this branch
+
+
+Dont merge-inverted append condition alone makes this branch unsafe —
+it would produce empty datasets on every recording session.
+transcribe.py adds nothing over main. Validation bugs already documented.
 
 ---
 
 ## CombinedBranch (origin/CombinedBranch)
-- line 3
-- line 92
-- line 53
+
 ### What improved over Sergiu's branch
 - Inverted append condition fixed: if(current_speaker): is now correct
 - 25-row check uncommented and active — only branch where this is restored
@@ -173,57 +218,6 @@ Do not merge
 — main is already more correct
 - Keep main as the base 
 - use Nita's ai_correction() upgrade when three issues fixed (wrong validation import, analytics commented out, return value mismatch between transcribe.py and main.py).
-
----
-
-## Sergiu's branch (origin/Sergiu)
-
-### What changed
-
-**transcribe.py:** essentially identical to main 
-— record_turn(current_speaker=None)
-w/ original three-value return (current_speaker, phrase, duration). 
-- No incremental CSV write logic 
-
-**validation/validation.py:** same file as already reviewed (Alina/Sergiu integration
-attempt). Same bugs documented above — sep="\t", 25-row check commented out,
-printAndAppendError index bug, no return True/False.
-
-**main.py:** one new critical bug introduced
-
----
-
-### Critical bug — append condition inverted
-
-```python
-if(not current_speaker):
-    all_data.append({...})
-else:
-    print("No data recorded for this turn.")
-```
-
-`not current_speaker`:
-- evaluates True only when current_speaker is None or empty.
-- the code only appends when there is NO speaker name, and prints
-"No data recorded for this turn" when there IS one.
-
-- Every turn would be discarded. The pipeline would produce an empty
-dataset every single run w/o any obvious error message. 
-- serious invisible bug w/o actually running and checking the CSV output.
-
----
-
-### Other issues (same as Nita's branch)
-
-- `from validation.validation import validate` — wrong import path, will crash
-- analytics import and Stage 5 both commented out
-- validation/validation.py has the same bugs documented in Alina's validation review
-  above — not safe to take from this branch
-
-
-Dont merge-inverted append condition alone makes this branch unsafe —
-it would produce empty datasets on every recording session.
-transcribe.py adds nothing over main. Validation bugs already documented.
 
 ---
 
@@ -503,4 +497,3 @@ Reason for seperation: each stage has a job
 A bug in enrichment can't affect transcription
 Two peopl can work on different stages w/o git conflicts
 "Seperation of concerns"
-

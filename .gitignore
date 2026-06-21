@@ -1,7 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
-vosk-model-en-us-0.22-lgraph/
 .env
 *.env
 __pycache__/

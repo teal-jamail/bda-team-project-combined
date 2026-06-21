@@ -1,0 +1,33 @@
+
+========== Meeting Analytics ==========
+
+Most words: Nita, 62 words
+Least words: Serg, 34 words
+
+Total speaking time: 222.4 seconds
+
+Average speaking time per speaker:
+  Alina: 8.43 seconds
+  Ebou: 9.07 seconds
+  Nita: 9.99 seconds
+  Serg: 8.18 seconds
+  Teal: 7.67 seconds
+
+Most questions: Nita, 2 question(s)
+
+Top 5 speakers by total speaking time:
+  1. Nita: 79.94 seconds
+  2. Ebou: 45.36 seconds
+  3. Alina: 33.71 seconds
+  4. Serg: 32.73 seconds
+  5. Teal: 30.66 seconds
+
+Average speech rate per speaker:
+  Alina: 1.06 words/second
+  Ebou: 0.99 words/second
+  Nita: 0.86 words/second
+  Serg: 1.0 words/second
+  Teal: 1.18 words/second
+
+========================================
+

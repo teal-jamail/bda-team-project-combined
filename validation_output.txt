@@ -1,0 +1,13 @@
+CSV loaded successfully
+                    timestamp   name  ... speech_rate_wps  speaker_turn_id
+0  2026-06-21T10:50:43.679736   Nita  ...            1.26                1
+1  2026-06-21T10:50:57.459732   Teal  ...            1.10                1
+2  2026-06-21T10:51:11.182608   Serg  ...            1.07                1
+3  2026-06-21T10:51:27.114602   Ebou  ...            1.30                1
+4  2026-06-21T10:51:40.126164  Alina  ...            0.98                1
+
+[5 rows x 10 columns]
+Row count validation passed
+No missing required values
+
+Validation Passed. Dataset is clean and ready for analysis!

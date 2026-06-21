@@ -93,7 +93,7 @@ def ai_correction(df):
         source_count[source] += 1
 
         print(f"Source used: {source}")
-        time.sleep(13) # stay under 5 requests per min. [free tier limit]
+        # time.sleep(13) # stay under 5 requests per min. [free tier limit]
 
     correct_df["text"] = texts
 
@@ -165,12 +165,12 @@ def main():
 
     # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
 
-        print("\n============================== SUMMARY ==============================")
-        print(f"Processed rows: {total_rows}")
-        print(f"Gemini used: {source_count['gemini']}")
-        print(f"Ollama used: {source_count['ollama']}")
-        print(f"Raw used: {source_count['raw']}")
-        print("======================================================================\n")
+    print("\n============================== SUMMARY ==============================")
+    print(f"Processed rows: {total_rows}")
+    print(f"Gemini used: {source_count['gemini']}")
+    print(f"Ollama used: {source_count['ollama']}")
+    print(f"Raw used: {source_count['raw']}")
+    print("======================================================================\n")
 
     # ====== Stage 3: Enrichment ======
     if os.path.exists(FINAL_FILE):

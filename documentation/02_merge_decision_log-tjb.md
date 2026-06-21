@@ -10,10 +10,34 @@ Output: a CSV with 25+ rows and a printed analytics report
 
 ---
 
+## Pipeline skip-stage fix (fix-pipeline-skip-stages branch)
 
-## Proposed changes pending (some merged 18.06) ~~(not merged as of 06.17)~~
+### Problem
+Pipeline always starts from Stage 1 recording regardless of whether data
+already exists. Re-running correction after a good recording session would
+require re-recording everything from scratch.
 
-### Nita Update 19/06
+### Fix
+Added os.path.exists() check at the start of Stages 1, 2, and 3.
+If the output CSV for that stage already exists, the stage is skipped
+and the existing data is loaded instead.
+
+Stage 1: skips recording if data/raw_transcript.csv exists
+Stage 2: skips correction if data/correct_transcript.csv exists
+Stage 3: skips enrichment if data/final_transcript.csv exists
+
+Stages 4 and 5 always re-run — validation and analytics produce
+console output only, not files, so there is nothing to skip.
+
+### Why this matters for tomorrow
+If Gemini rate limits mid-correction again, we can re-run just Stage 2
+withou
+
+--- 
+
+## Proposed changes pending~~(not merged as of 06.17)~~
+
+### Nita Update 20/06 (merged)
 ```markdown
 
 **recording_session() — clean separation of concerns:**

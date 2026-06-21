@@ -9,12 +9,15 @@ Set GEMINI_API_KEY before running:
 import os
 from google import genai
 from common.prompts import CORRECTION_PROMPT
+import time
 
 MODEL_NAME = "gemini-2.5-flash" 
 
 
 def ask_gemini(text):
     try:
+        time.sleep(13)
+
         client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
         
         prompt = CORRECTION_PROMPT.format(text=text)

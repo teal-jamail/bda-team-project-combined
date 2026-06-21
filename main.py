@@ -162,37 +162,25 @@ def main():
     # print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
 
    
-   # ====== Stage 2: AI correction ======
+# ====== Stage 2: AI correction ======
     if os.path.exists(CORRECT_FILE):
-<<<<<<< HEAD
         # skip correction if corrected csv already exists
         # avoids rerunning 25+ API calls unnecessarily
         print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
         correct_df = pd.read_csv(CORRECT_FILE)
-=======
-    # skip correction if corrected csv already exists
-    # avoids rerunning 25+ API calls unnecessarily
-
-        print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
-        correct_df = pd.read_csv(CORRECT_FILE)
         total_rows = len(correct_df)
-
         if os.path.exists(SUMMARY_FILE):
             with open(SUMMARY_FILE, "r") as f:
                 summary = json.load(f)
-
             total_rows = summary["total_rows"]
             source_count = {
                 "gemini": summary.get("gemini_used", 0),
                 "ollama": summary.get("ollama_used", 0),
                 "raw": summary.get("raw_used", 0)
             }
-
         else:
             total_rows = len(correct_df)
             source_count = {"gemini": 0, "ollama": 0, "raw": 0}
-
->>>>>>> 62f49f54e655f54b92cf99aa74222884e60ce852
     else:
         print("\nStarting AI correction...\n")
         correct_df, total_rows, source_count = ai_correction(df)

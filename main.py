@@ -6,6 +6,7 @@ from validation import validate
 from analyse import analyse_dataset
 from common.helpers import load_csv, save_csv
 import time
+import os
 from datetime import datetime
 import pandas as pd
 
@@ -92,7 +93,7 @@ def ai_correction(df):
         source_count[source] += 1
 
         print(f"Source used: {source}")
-        time.sleep(13) # stay under 5 requests per min. [free tier limit]
+        # time.sleep(13) # stay under 5 requests per min. [free tier limit]
 
     correct_df["text"] = texts
 
@@ -102,27 +103,67 @@ def main():
     print("\n=============== Team Meeting Recorder Started ===============\n")
 
     # ====== Stage 1: Record and transcribe ======
+    if os.path.exists(RAW_FILE):
+        # skip recording if raw csv already exists
+        # protects overwrites
+        # useful only for re-run correction or enrichment
 
-    all_data = recording_session()
+        print(f"Raw transcript found at {RAW_FILE} — skipping recording.")
+        df = pd.read_csv(RAW_FILE)
+        # Time: O(n) - n rows from disk
+        # Space: O(n) - load full data to memory
 
-    if not all_data:
-        print("No data recorded.")
-        return
+    else:
+        # no raw csv found - run the full recording sesh
+        all_data = recording_session()
+        if not all_data:
+            print("No data to re-record.")
+            return
+            # guard: exits if session empty
+        df = pd.DataFrame(all_data)
+        # converts list of dicts to df - 1 dict per turn
 
-    df = pd.DataFrame(all_data)
+        save_csv(df, RAW_FILE)
+        print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
+    
+    # ====== Stage 1: Record and transcribe ======
 
-    save_csv(df, RAW_FILE)
+    # all_data = recording_session()
 
-    print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
+    # if not all_data:
+        # print("No data recorded.")
+        # return
+
+    # df = pd.DataFrame(all_data)
+
+    # save_csv(df, RAW_FILE)
+
+    # print(f"\nStage 1 complete: {len(df)} rows saved to {RAW_FILE}")
+
+   
+   # ====== Stage 2: AI correction ======
+    if os.path.exists(CORRECT_FILE):
+    # skip correction if corrected csv already exists
+    # avoids rerunning 25+ API calls unnecessarily
+
+        print(f"Corrected transcript at {CORRECT_FILE} — skipping correction.")
+        correct_df = pd.read_csv(CORRECT_FILE)
+
+    else:
+        print("\nStarting AI correction...\n")
+        correct_df, total_rows, source_count = ai_correction(df)
+        save_csv(correct_df, CORRECT_FILE)
+        print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
+   
 
     # ====== Stage 2: AI correction ======
-    print("\nStarting AI correction...\n")
+    # print("\nStarting AI correction...\n")
 
-    correct_df, total_rows, source_count = ai_correction(df)
+    # correct_df, total_rows, source_count = ai_correction(df)
 
-    save_csv(correct_df, CORRECT_FILE)
+    # save_csv(correct_df, CORRECT_FILE)
 
-    print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
+    # print(f"Stage 2 complete: corrected transcript saved to {CORRECT_FILE}")
 
     print("\n============================== SUMMARY ==============================")
     print(f"Processed rows: {total_rows}")
@@ -132,13 +173,24 @@ def main():
     print("======================================================================\n")
 
     # ====== Stage 3: Enrichment ======
-    print("\nEnriching dataset...\n")
-    
-    final_df = enrich_dataframe(correct_df)
+    if os.path.exists(FINAL_FILE):
+        # skip enrichment if final CSV already exists
+        print(f"Final transcript found at {FINAL_FILE} — skipping enrichment.")
+        final_df = pd.read_csv(FINAL_FILE)
+    else:
+        print("Enriching dataset...\n")
+        final_df = enrich_dataframe(correct_df)
+        save_csv(final_df, FINAL_FILE)
+        print(f"Stage 3 complete: enriched dataset saved to {FINAL_FILE}")
 
-    save_csv(final_df, FINAL_FILE)
+    # ====== Stage 3: Enrichment ======
+    # print("\nEnriching dataset...\n")
     
-    print(f"Stage 3 complete: enriched dataset saved to {FINAL_FILE}")
+    # final_df = enrich_dataframe(correct_df)
+
+    # save_csv(final_df, FINAL_FILE)
+    
+    # print(f"Stage 3 complete: enriched dataset saved to {FINAL_FILE}")
 
 
     # ====== Stage 4: Validation ======

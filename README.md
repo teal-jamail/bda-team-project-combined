@@ -23,7 +23,7 @@ Adds five calculated columns to the corrected transcript using pandas (no AI). S
 Checks the final dataset for errors and data-quality issues. If validation fails, the pipeline stops and reports the issues to fix.
 
 **Stage 5 — Analysis (analyse/)**
-Runs analytics on the validated dataset — for example, who spoke the most and who asked the most questions. (Note: this stage is present in the codebase but currently disabled in main.py.)
+Runs analytics on the validated dataset — for example, who spoke the most and who asked the most questions. Produces analytics on speaker behaviour, including most/least words spoken, questions asked, top speakers by time, and average speech rate.
 
 ## Project structure
 
@@ -46,7 +46,7 @@ Runs analytics on the validated dataset — for example, who spoke the most and 
 
 1. Install dependencies:
 
-       pip install vosk sounddevice pandas google-generativeai ollama
+       pip install vosk sounddevice pandas google-genai requests
 
 2. Download the Vosk model and place it where transcribe.py expects it.
 
